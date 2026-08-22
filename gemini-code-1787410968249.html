@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Epilepsy Foundation HK - Toy App</title>
+    <style>
+        :root {
+            --red: #d32f2f;
+            --orange: #f57c00;
+            --yellow: #fbc02d;
+            --bg: #f4f4f9;
+            --text: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+            text-align: center;
+        }
+        .header {
+            margin-bottom: 20px;
+        }
+        .logo-placeholder {
+            background-color: #757575;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+        .controls {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 320px;
+        }
+        .toggle-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        select, button.record-toggle {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+        button.record-toggle {
+            background-color: #e0e0e0;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button.record-toggle.active {
+            background-color: #ffcdd2;
+            color: #c62828;
+            border-color: #c62828;
+            font-weight: bold;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            background: #e0e0e0;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: inset 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .btn-toy {
+            width: 100px;
+            height: 100px;
+            border: none;
+            border-radius: 12px;
+            font-size: 32px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 8px 0 rgba(0,0,0,0.2);
+            transition: all 0.1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+        }
+        .btn-toy:active {
+            transform: translateY(8px);
+            box-shadow: 0 0 0 rgba(0,0,0,0.2);
+        }
+        .btn-top-left, .btn-top-right { background-color: var(--red); }
+        .btn-bottom-left { background-color: var(--orange); }
+        .btn-bottom-right { background-color: var(--yellow); }
+        
+        #status {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #d32f2f;
+            height: 24px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo-placeholder">
+            香港腦癇基金會<br>EPILEPSY FOUNDATION<br>OF HONG KONG
+        </div>
+        <h2>守望相助 (Watch & Help)</h2>
+    </div>
+
+    <div class="controls">
+        <div class="toggle-group">
+            <label for="modeSelect">App Mode:</label>
+            <select id="modeSelect">
+                <option value="toy">Toy Mode (Record/Play)</option>
+                <option value="edu">Education Mode</option>
+            </select>
+        </div>
+        <button id="recordToggle" class="record-toggle">Record Mode: OFF</button>
+        <p style="font-size: 12px; color: #666; margin-top: 10px;">
+            In Toy Mode, toggle "Record" ON, then click a button to record (up to 60s). Click again to stop. Toggle OFF to play.
+        </p>
+    </div>
+
+    <div class="grid">
+        <button class="btn-toy btn-top-left" data-id="1">守</button>
+        <button class="btn-toy btn-top-right" data-id="2">望</button>
+        <button class="btn-toy btn-bottom-left" data-id="3">相</button>
+        <button class="btn-toy btn-bottom-right" data-id="4">助</button>
+    </div>
+
+    <div id="status"></div>
+
+    <script>
+        // State Management
+        let currentMode = 'toy'; // 'toy' or 'edu'
+        let isRecordModeActive = false;
+        let isRecording = false;
+        let mediaRecorder;
+        let audioChunks = [];
+        let currentRecordingId = null;
+        let recordingTimeout;
+
+        // Audio Storage (Stores blob URLs)
+        const userAudio = { 1: null, 2: null, 3: null, 4: null };
+        
+        // Education Mode Pre-loaded text
+        const eduContent = {
+            1: "守. Stay calm and time the seizure.",
+            2: "望. Observe and keep the person safe. Clear the area of hard objects and cushion their head.",
+            3: "相. Gently roll the person onto their side into the recovery position to keep their airway clear.",
+            4: "助. Help. Never put anything in their mouth. Stay with them, and call for emergency help if the seizure lasts over five minutes."
+        };
+
+        // DOM Elements
+        const modeSelect = document.getElementById('modeSelect');
+        const recordToggle = document.getElementById('recordToggle');
+        const statusDiv = document.getElementById('status');
+        const buttons = document.querySelectorAll('.btn-toy');
+
+        // Event Listeners for Controls
+        modeSelect.addEventListener('change', (e) => {
+            currentMode = e.target.value;
+            if (currentMode === 'edu') {
+                recordToggle.style.display = 'none';
+                isRecordModeActive = false;
+                recordToggle.classList.remove('active');
+                recordToggle.innerText = "Record Mode: OFF";
+                setStatus("Education Mode: Click buttons for instructions.");
+            } else {
+                recordToggle.style.display = 'block';
+                setStatus("Toy Mode: Ready.");
+            }
+        });
+
+        recordToggle.addEventListener('click', async () => {
+            if (!isRecordModeActive) {
+                // Request microphone permissions
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    setupMediaRecorder(stream);
+                    isRecordModeActive = true;
+                    recordToggle.classList.add('active');
+                    recordToggle.innerText = "Record Mode: ON (Click a button)";
+                    setStatus("Ready to record.");
+                } catch (err) {
+                    alert("Microphone access is required to record audio.");
+                    console.error(err);
+                }
+            } else {
+                isRecordModeActive = false;
+                recordToggle.classList.remove('active');
+                recordToggle.innerText = "Record Mode: OFF";
+                setStatus("Playback mode active.");
+            }
+        });
+
+        // Setup Media Recorder
+        function setupMediaRecorder(stream) {
+            mediaRecorder = new MediaRecorder(stream);
+            
+            mediaRecorder.ondataavailable = event => {
+                audioChunks.push(event.data);
+            };
+
+            mediaRecorder.onstop = () => {
+                const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                const audioUrl = URL.createObjectURL(audioBlob);
+                userAudio[currentRecordingId] = audioUrl;
+                audioChunks = [];
+                setStatus(`Saved to button ${currentRecordingId}.`);
+                isRecording = false;
+            };
+        }
+
+        // Button Interaction Logic
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.getAttribute('data-id');
+
+                if (currentMode === 'edu') {
+                    // Play Text-to-Speech for Education Mode
+                    window.speechSynthesis.cancel(); // Stop current speech
+                    const utterance = new SpeechSynthesisUtterance(eduContent[id]);
+                    window.speechSynthesis.speak(utterance);
+                    setStatus(`Playing education step ${id}...`);
+                    
+                } else if (currentMode === 'toy') {
+                    if (isRecordModeActive) {
+                        handleRecording(id);
+                    } else {
+                        playUserAudio(id);
+                    }
+                }
+            });
+        });
+
+        function handleRecording(id) {
+            if (isRecording && currentRecordingId === id) {
+                // Stop recording
+                mediaRecorder.stop();
+                clearTimeout(recordingTimeout);
+            } else if (!isRecording) {
+                // Start recording
+                audioChunks = [];
+                currentRecordingId = id;
+                mediaRecorder.start();
+                isRecording = true;
+                setStatus(`Recording on button ${id}... (Max 60s)`);
+                
+                // Enforce 1 minute limit (60000 ms)
+                recordingTimeout = setTimeout(() => {
+                    if (mediaRecorder.state === "recording") {
+                        mediaRecorder.stop();
+                        setStatus(`Time limit reached. Saved to button ${id}.`);
+                    }
+                }, 60000);
+            } else {
+                setStatus("Stop the current recording first!");
+            }
+        }
+
+        function playUserAudio(id) {
+            if (userAudio[id]) {
+                const audio = new Audio(userAudio[id]);
+                audio.play();
+                setStatus(`Playing button ${id}...`);
+            } else {
+                setStatus("No audio recorded for this button yet.");
+            }
+        }
+
+        function setStatus(msg) {
+            statusDiv.innerText = msg;
+        }
+    </script>
+</body>
+</html>
