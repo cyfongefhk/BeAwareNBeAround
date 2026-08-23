@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Epilepsy Foundation HK - Toy App</title>
+    <title>Epilepsy Foundation HK - BeAware n' Be Around</title>
     <style>
         :root {
-            --red: #d32f2f;
-            --orange: #f57c00;
-            --yellow: #fbc02d;
-            --bg: #f4f4f9;
+            /* Updated to Epilepsy Foundation HK Orange Theme */
+            --primary-orange: #f57c00; 
+            --light-orange: #ffe0b2;
+            --dark-orange: #e65100;
+            --bg: #fff9f5;
             --text: #333;
         }
         body {
@@ -27,22 +28,28 @@
             margin-bottom: 20px;
         }
         .logo-placeholder {
-            background-color: #757575;
+            background-color: var(--primary-orange);
             color: white;
             padding: 10px 20px;
             border-radius: 4px;
             font-size: 14px;
             margin-bottom: 15px;
             display: inline-block;
+            font-weight: bold;
+        }
+        h2 {
+            color: var(--dark-orange);
+            margin-top: 0;
         }
         .controls {
             margin-bottom: 20px;
             padding: 15px;
             background: white;
             border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             width: 100%;
             max-width: 320px;
+            border: 1px solid var(--light-orange);
         }
         .toggle-group {
             display: flex;
@@ -56,25 +63,31 @@
             border-radius: 8px;
             border: 1px solid #ccc;
         }
+        select {
+            border-color: var(--primary-orange);
+            color: var(--dark-orange);
+            font-weight: bold;
+        }
         button.record-toggle {
             background-color: #e0e0e0;
             cursor: pointer;
             transition: 0.3s;
+            width: 100%;
         }
         button.record-toggle.active {
-            background-color: #ffcdd2;
-            color: #c62828;
-            border-color: #c62828;
+            background-color: #ffcc80;
+            color: var(--dark-orange);
+            border-color: var(--dark-orange);
             font-weight: bold;
         }
         .grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
-            background: #e0e0e0;
+            background: var(--light-orange);
             padding: 20px;
             border-radius: 16px;
-            box-shadow: inset 0 4px 8px rgba(0,0,0,0.2);
+            box-shadow: inset 0 4px 8px rgba(0,0,0,0.1);
         }
         .btn-toy {
             width: 100px;
@@ -85,26 +98,30 @@
             font-weight: bold;
             color: white;
             cursor: pointer;
-            box-shadow: 0 8px 0 rgba(0,0,0,0.2);
+            box-shadow: 0 8px 0 rgba(0,0,0,0.15);
             transition: all 0.1s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             user-select: none;
+            background-color: var(--primary-orange);
         }
         .btn-toy:active {
             transform: translateY(8px);
-            box-shadow: 0 0 0 rgba(0,0,0,0.2);
+            box-shadow: 0 0 0 rgba(0,0,0,0.15);
         }
-        .btn-top-left, .btn-top-right { background-color: var(--red); }
-        .btn-bottom-left { background-color: var(--orange); }
-        .btn-bottom-right { background-color: var(--yellow); }
         
         #status {
             margin-top: 20px;
             font-weight: bold;
-            color: #d32f2f;
+            color: var(--dark-orange);
             height: 24px;
+        }
+        .help-text {
+            font-size: 12px; 
+            color: #666; 
+            margin-top: 10px;
+            display: none; /* Hidden in Education mode */
         }
     </style>
 </head>
@@ -114,35 +131,37 @@
         <div class="logo-placeholder">
             香港腦癇基金會<br>EPILEPSY FOUNDATION<br>OF HONG KONG
         </div>
-        <h2>守望相助 (Watch & Help)</h2>
+        <h2>BeAware n' Be Around</h2>
     </div>
 
     <div class="controls">
         <div class="toggle-group">
             <label for="modeSelect">App Mode:</label>
+            <!-- Education mode set as default -->
             <select id="modeSelect">
+                <option value="edu" selected>Education Mode</option>
                 <option value="toy">Toy Mode (Record/Play)</option>
-                <option value="edu">Education Mode</option>
             </select>
         </div>
-        <button id="recordToggle" class="record-toggle">Record Mode: OFF</button>
-        <p style="font-size: 12px; color: #666; margin-top: 10px;">
+        <!-- Record toggle hidden by default -->
+        <button id="recordToggle" class="record-toggle" style="display: none;">Record Mode: OFF</button>
+        <p id="helpText" class="help-text">
             In Toy Mode, toggle "Record" ON, then click a button to record (up to 60s). Click again to stop. Toggle OFF to play.
         </p>
     </div>
 
     <div class="grid">
-        <button class="btn-toy btn-top-left" data-id="1">守</button>
-        <button class="btn-toy btn-top-right" data-id="2">望</button>
-        <button class="btn-toy btn-bottom-left" data-id="3">相</button>
-        <button class="btn-toy btn-bottom-right" data-id="4">助</button>
+        <button class="btn-toy" data-id="1">守</button>
+        <button class="btn-toy" data-id="2">望</button>
+        <button class="btn-toy" data-id="3">相</button>
+        <button class="btn-toy" data-id="4">助</button>
     </div>
 
-    <div id="status"></div>
+    <div id="status">Education Mode: Click buttons for instructions.</div>
 
     <script>
-        // State Management
-        let currentMode = 'toy'; // 'toy' or 'edu'
+        // State Management - Default to Education Mode
+        let currentMode = 'edu'; 
         let isRecordModeActive = false;
         let isRecording = false;
         let mediaRecorder;
@@ -150,7 +169,7 @@
         let currentRecordingId = null;
         let recordingTimeout;
 
-        // Audio Storage (Stores blob URLs)
+        // Audio Storage
         const userAudio = { 1: null, 2: null, 3: null, 4: null };
         
         // Education Mode Pre-loaded text
@@ -165,6 +184,7 @@
         const modeSelect = document.getElementById('modeSelect');
         const recordToggle = document.getElementById('recordToggle');
         const statusDiv = document.getElementById('status');
+        const helpText = document.getElementById('helpText');
         const buttons = document.querySelectorAll('.btn-toy');
 
         // Event Listeners for Controls
@@ -172,19 +192,20 @@
             currentMode = e.target.value;
             if (currentMode === 'edu') {
                 recordToggle.style.display = 'none';
+                helpText.style.display = 'none';
                 isRecordModeActive = false;
                 recordToggle.classList.remove('active');
                 recordToggle.innerText = "Record Mode: OFF";
                 setStatus("Education Mode: Click buttons for instructions.");
             } else {
                 recordToggle.style.display = 'block';
+                helpText.style.display = 'block';
                 setStatus("Toy Mode: Ready.");
             }
         });
 
         recordToggle.addEventListener('click', async () => {
             if (!isRecordModeActive) {
-                // Request microphone permissions
                 try {
                     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
                     setupMediaRecorder(stream);
@@ -204,16 +225,20 @@
             }
         });
 
-        // Setup Media Recorder
+        // Setup Media Recorder with Cross-Browser Compatibility Fix
         function setupMediaRecorder(stream) {
             mediaRecorder = new MediaRecorder(stream);
             
             mediaRecorder.ondataavailable = event => {
-                audioChunks.push(event.data);
+                if (event.data.size > 0) {
+                    audioChunks.push(event.data);
+                }
             };
 
             mediaRecorder.onstop = () => {
-                const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                // Fix: Removed hardcoded 'audio/webm' type. 
+                // Allowing the browser to define the default Blob type fixes playback issues on iOS/Safari.
+                const audioBlob = new Blob(audioChunks); 
                 const audioUrl = URL.createObjectURL(audioBlob);
                 userAudio[currentRecordingId] = audioUrl;
                 audioChunks = [];
@@ -229,7 +254,7 @@
 
                 if (currentMode === 'edu') {
                     // Play Text-to-Speech for Education Mode
-                    window.speechSynthesis.cancel(); // Stop current speech
+                    window.speechSynthesis.cancel();
                     const utterance = new SpeechSynthesisUtterance(eduContent[id]);
                     window.speechSynthesis.speak(utterance);
                     setStatus(`Playing education step ${id}...`);
@@ -246,18 +271,15 @@
 
         function handleRecording(id) {
             if (isRecording && currentRecordingId === id) {
-                // Stop recording
                 mediaRecorder.stop();
                 clearTimeout(recordingTimeout);
             } else if (!isRecording) {
-                // Start recording
                 audioChunks = [];
                 currentRecordingId = id;
                 mediaRecorder.start();
                 isRecording = true;
                 setStatus(`Recording on button ${id}... (Max 60s)`);
                 
-                // Enforce 1 minute limit (60000 ms)
                 recordingTimeout = setTimeout(() => {
                     if (mediaRecorder.state === "recording") {
                         mediaRecorder.stop();
@@ -272,7 +294,11 @@
         function playUserAudio(id) {
             if (userAudio[id]) {
                 const audio = new Audio(userAudio[id]);
-                audio.play();
+                // Added a catch block to handle potential browser autoplay policy restrictions
+                audio.play().catch(error => {
+                    console.error("Playback failed:", error);
+                    setStatus("Playback failed. Please ensure volume is up.");
+                });
                 setStatus(`Playing button ${id}...`);
             } else {
                 setStatus("No audio recorded for this button yet.");
