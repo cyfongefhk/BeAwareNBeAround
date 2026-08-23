@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-HK">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Epilepsy Foundation HK - BeAware n' Be Around</title>
+    <title>Epilepsy Foundation HK - Be Aware n' Be Around</title>
     <style>
         :root {
-            /* Updated to Epilepsy Foundation HK Orange Theme */
             --primary-orange: #f57c00; 
             --light-orange: #ffe0b2;
             --dark-orange: #e65100;
@@ -105,12 +104,23 @@
             justify-content: center;
             user-select: none;
             background-color: var(--primary-orange);
+            -webkit-tap-highlight-color: transparent;
         }
         .btn-toy:active {
             transform: translateY(8px);
             box-shadow: 0 0 0 rgba(0,0,0,0.15);
         }
         
+        /* Animation for recording state */
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(211, 47, 47, 0.7); background-color: #d32f2f; }
+            50% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(211, 47, 47, 0); background-color: #ff5252; }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(211, 47, 47, 0); background-color: #d32f2f; }
+        }
+        .recording-pulse {
+            animation: pulse 1.5s infinite;
+        }
+
         #status {
             margin-top: 20px;
             font-weight: bold;
@@ -121,7 +131,7 @@
             font-size: 12px; 
             color: #666; 
             margin-top: 10px;
-            display: none; /* Hidden in Education mode */
+            display: none;
         }
     </style>
 </head>
@@ -131,22 +141,20 @@
         <div class="logo-placeholder">
             香港腦癇基金會<br>EPILEPSY FOUNDATION<br>OF HONG KONG
         </div>
-        <h2>BeAware n' Be Around</h2>
+        <h2>Be Aware n' Be Around</h2>
     </div>
 
     <div class="controls">
         <div class="toggle-group">
-            <label for="modeSelect">App Mode:</label>
-            <!-- Education mode set as default -->
+            <label for="modeSelect">應用模式：</label>
             <select id="modeSelect">
-                <option value="edu" selected>Education Mode</option>
-                <option value="toy">Toy Mode (Record/Play)</option>
+                <option value="edu" selected>教育模式</option>
+                <option value="toy">玩具模式 (錄音/播放)</option>
             </select>
         </div>
-        <!-- Record toggle hidden by default -->
-        <button id="recordToggle" class="record-toggle" style="display: none;">Record Mode: OFF</button>
+        <button id="recordToggle" class="record-toggle" style="display: none;">錄音模式：關閉</button>
         <p id="helpText" class="help-text">
-            In Toy Mode, toggle "Record" ON, then click a button to record (up to 60s). Click again to stop. Toggle OFF to play.
+            在玩具模式下，開啟「錄音模式」，然後點擊按鍵進行錄音（最長60秒）。再次點擊停止。關閉「錄音模式」即可播放。
         </p>
     </div>
 
@@ -157,10 +165,12 @@
         <button class="btn-toy" data-id="4">助</button>
     </div>
 
-    <div id="status">Education Mode: Click buttons for instructions.</div>
+    <div id="status">教育模式：請點擊按鍵聆聽指示。</div>
+
+    <!-- Hidden audio element for more reliable mobile playback -->
+    <audio id="globalAudioPlayer" playsinline></audio>
 
     <script>
-        // State Management - Default to Education Mode
         let currentMode = 'edu'; 
         let isRecordModeActive = false;
         let isRecording = false;
@@ -168,26 +178,26 @@
         let audioChunks = [];
         let currentRecordingId = null;
         let recordingTimeout;
+        let supportedMimeType = '';
 
-        // Audio Storage
         const userAudio = { 1: null, 2: null, 3: null, 4: null };
+        const globalAudioPlayer = document.getElementById('globalAudioPlayer');
         
-        // Education Mode Pre-loaded text
+        // Translated clinical instructions
         const eduContent = {
-            1: "守. Stay calm and time the seizure.",
-            2: "望. Observe and keep the person safe. Clear the area of hard objects and cushion their head.",
-            3: "相. Gently roll the person onto their side into the recovery position to keep their airway clear.",
-            4: "助. Help. Never put anything in their mouth. Stay with them, and call for emergency help if the seizure lasts over five minutes."
+            1: "守。保持鎮定，記錄抽搐開始及持續的時間。",
+            2: "望。觀察並保護患者。移開附近危險物品，用軟物墊著患者頭部。",
+            3: "相。將患者輕輕翻側，保持呼吸道暢通。",
+            4: "助。尋求協助。切勿強行將任何物品塞入患者口中。陪伴患者直至清醒，若抽搐超過五分鐘請召喚救護車。"
         };
 
-        // DOM Elements
         const modeSelect = document.getElementById('modeSelect');
         const recordToggle = document.getElementById('recordToggle');
         const statusDiv = document.getElementById('status');
         const helpText = document.getElementById('helpText');
         const buttons = document.querySelectorAll('.btn-toy');
 
-        // Event Listeners for Controls
+        // Mode Switching
         modeSelect.addEventListener('change', (e) => {
             currentMode = e.target.value;
             if (currentMode === 'edu') {
@@ -195,15 +205,16 @@
                 helpText.style.display = 'none';
                 isRecordModeActive = false;
                 recordToggle.classList.remove('active');
-                recordToggle.innerText = "Record Mode: OFF";
-                setStatus("Education Mode: Click buttons for instructions.");
+                recordToggle.innerText = "錄音模式：關閉";
+                setStatus("教育模式：請點擊按鍵聆聽指示。");
             } else {
                 recordToggle.style.display = 'block';
                 helpText.style.display = 'block';
-                setStatus("Toy Mode: Ready.");
+                setStatus("玩具模式：準備就緒。");
             }
         });
 
+        // Toggle Recording Status
         recordToggle.addEventListener('click', async () => {
             if (!isRecordModeActive) {
                 try {
@@ -211,23 +222,33 @@
                     setupMediaRecorder(stream);
                     isRecordModeActive = true;
                     recordToggle.classList.add('active');
-                    recordToggle.innerText = "Record Mode: ON (Click a button)";
-                    setStatus("Ready to record.");
+                    recordToggle.innerText = "錄音模式：開啟 (請點擊按鍵)";
+                    setStatus("準備錄音。");
                 } catch (err) {
-                    alert("Microphone access is required to record audio.");
+                    alert("需要麥克風權限才能進行錄音。");
                     console.error(err);
                 }
             } else {
                 isRecordModeActive = false;
                 recordToggle.classList.remove('active');
-                recordToggle.innerText = "Record Mode: OFF";
-                setStatus("Playback mode active.");
+                recordToggle.innerText = "錄音模式：關閉";
+                if(isRecording) stopRecording(currentRecordingId);
+                setStatus("播放模式：開啟。");
             }
         });
 
-        // Setup Media Recorder with Cross-Browser Compatibility Fix
+        // Setup Media Recorder with Cross-Browser MIME type detection
         function setupMediaRecorder(stream) {
-            mediaRecorder = new MediaRecorder(stream);
+            const types = ['audio/webm', 'audio/mp4', 'audio/ogg', ''];
+            for (let i = 0; i < types.length; i++) {
+                if (types[i] === '' || MediaRecorder.isTypeSupported(types[i])) {
+                    supportedMimeType = types[i];
+                    break;
+                }
+            }
+            
+            const options = supportedMimeType ? { mimeType: supportedMimeType } : undefined;
+            mediaRecorder = new MediaRecorder(stream, options);
             
             mediaRecorder.ondataavailable = event => {
                 if (event.data.size > 0) {
@@ -236,32 +257,28 @@
             };
 
             mediaRecorder.onstop = () => {
-                // Fix: Removed hardcoded 'audio/webm' type. 
-                // Allowing the browser to define the default Blob type fixes playback issues on iOS/Safari.
-                const audioBlob = new Blob(audioChunks); 
+                const audioBlob = new Blob(audioChunks, { type: mediaRecorder.mimeType || 'audio/mp4' }); 
                 const audioUrl = URL.createObjectURL(audioBlob);
                 userAudio[currentRecordingId] = audioUrl;
                 audioChunks = [];
-                setStatus(`Saved to button ${currentRecordingId}.`);
+                setStatus(`已儲存至按鍵 ${currentRecordingId}。`);
                 isRecording = false;
+                
+                // Remove animation
+                document.querySelector(`[data-id="${currentRecordingId}"]`).classList.remove('recording-pulse');
             };
         }
 
-        // Button Interaction Logic
+        // Handle button clicks
         buttons.forEach(btn => {
             btn.addEventListener('click', () => {
                 const id = btn.getAttribute('data-id');
 
                 if (currentMode === 'edu') {
-                    // Play Text-to-Speech for Education Mode
-                    window.speechSynthesis.cancel();
-                    const utterance = new SpeechSynthesisUtterance(eduContent[id]);
-                    window.speechSynthesis.speak(utterance);
-                    setStatus(`Playing education step ${id}...`);
-                    
+                    playEducationTTS(id);
                 } else if (currentMode === 'toy') {
                     if (isRecordModeActive) {
-                        handleRecording(id);
+                        handleRecording(id, btn);
                     } else {
                         playUserAudio(id);
                     }
@@ -269,39 +286,54 @@
             });
         });
 
-        function handleRecording(id) {
+        function playEducationTTS(id) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(eduContent[id]);
+            utterance.lang = 'zh-HK'; // Cantonese voice
+            window.speechSynthesis.speak(utterance);
+            setStatus(`播放教育步驟 ${id}...`);
+        }
+
+        function handleRecording(id, btnElement) {
             if (isRecording && currentRecordingId === id) {
-                mediaRecorder.stop();
-                clearTimeout(recordingTimeout);
+                stopRecording(id);
             } else if (!isRecording) {
                 audioChunks = [];
                 currentRecordingId = id;
                 mediaRecorder.start();
                 isRecording = true;
-                setStatus(`Recording on button ${id}... (Max 60s)`);
+                
+                // Add animation
+                btnElement.classList.add('recording-pulse');
+                setStatus(`正在按鍵 ${id} 錄音... (最長60秒)`);
                 
                 recordingTimeout = setTimeout(() => {
                     if (mediaRecorder.state === "recording") {
-                        mediaRecorder.stop();
-                        setStatus(`Time limit reached. Saved to button ${id}.`);
+                        stopRecording(id);
+                        setStatus(`已達時間上限。已儲存至按鍵 ${id}。`);
                     }
                 }, 60000);
             } else {
-                setStatus("Stop the current recording first!");
+                setStatus("請先停止目前的錄音！");
             }
+        }
+
+        function stopRecording(id) {
+            mediaRecorder.stop();
+            clearTimeout(recordingTimeout);
+            document.querySelector(`[data-id="${id}"]`).classList.remove('recording-pulse');
         }
 
         function playUserAudio(id) {
             if (userAudio[id]) {
-                const audio = new Audio(userAudio[id]);
-                // Added a catch block to handle potential browser autoplay policy restrictions
-                audio.play().catch(error => {
+                globalAudioPlayer.src = userAudio[id];
+                globalAudioPlayer.play().catch(error => {
                     console.error("Playback failed:", error);
-                    setStatus("Playback failed. Please ensure volume is up.");
+                    setStatus("播放失敗，請確保手機未靜音並調高音量。");
                 });
-                setStatus(`Playing button ${id}...`);
+                setStatus(`播放按鍵 ${id}...`);
             } else {
-                setStatus("No audio recorded for this button yet.");
+                setStatus("此按鍵尚未有錄音。");
             }
         }
 
