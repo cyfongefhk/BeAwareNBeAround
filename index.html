@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Epilepsy Foundation HK - Be Aware n' Be Around</title>
+    
+    <!-- PWA Manifest Placeholder (Required for full Install App functionality) -->
+    <!-- <link rel="manifest" href="manifest.json"> -->
+
     <style>
         :root {
             --red: #d32f2f;
@@ -37,7 +41,6 @@
             height: auto;
             max-height: 120px;
         }
-        /* Fallback logo style in case image_2.png is missing */
         .fallback-logo {
             display: none;
             background-color: var(--primary-brand);
@@ -68,8 +71,30 @@
             font-weight: bold;
             color: #444;
             display: inline-block;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
+        
+        /* New Install App Button Styling */
+        .install-btn {
+            display: block;
+            margin: 0 auto 20px auto;
+            background-color: #43E660; 
+            color: #111;
+            padding: 10px 25px;
+            border-radius: 25px;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.2s;
+            width: 100%;
+            max-width: 250px;
+        }
+        .install-btn:active {
+            transform: scale(0.96);
+        }
+
         .controls {
             margin-bottom: 15px;
             padding: 15px;
@@ -155,7 +180,6 @@
             background-color: #ff5252 !important;
         }
         
-        /* YouTube Embed Styling */
         .youtube-container {
             margin-top: 25px;
             width: 100%;
@@ -190,7 +214,6 @@
             height: 24px;
         }
 
-        /* Audio Player Custom UI - ONLY FOR TOY MODE */
         .audio-player {
             width: 100%;
             max-width: 320px;
@@ -290,7 +313,6 @@
         .setup-guide h5 { margin: 10px 0 5px 0; color: var(--primary-brand); font-size: 14px; }
         .setup-guide ul { margin: 0; padding-left: 20px; }
 
-        /* Footer Linktree */
         .footer-linktree {
             margin-top: 10px;
             margin-bottom: 40px;
@@ -332,6 +354,9 @@
         <div class="counter-box">
             全球點擊次數 (Global Clicks): <span id="globalCounter">12,543</span>
         </div>
+        
+        <!-- App Install Button -->
+        <button id="btnInstallApp" class="install-btn">📲 安裝應用程式 (Install App)</button>
     </div>
 
     <div class="controls">
@@ -354,7 +379,6 @@
 
     <div id="status">教育模式：請點擊按鍵聆聽指示。</div>
 
-    <!-- YouTube Embed with parameters added to suppress annotations -->
     <div class="youtube-container">
         <div class="youtube-label">▶️ 急性腦癇發作處理動畫</div>
         <iframe src="https://www.youtube.com/embed/g9909mQ2dRo?iv_load_policy=3&rel=0&modestbranding=1" 
@@ -363,7 +387,6 @@
                 allowfullscreen></iframe>
     </div>
 
-    <!-- Custom Audio Player UI (Toy Mode Only) -->
     <div id="audioPlayerUI" class="audio-player">
         <div class="player-status" id="playerStatus">正在播放 (Playing)</div>
         <div class="player-controls">
@@ -413,6 +436,38 @@
     <audio id="globalAudioPlayer" playsinline></audio>
 
     <script>
+        // --- App Install Logic ---
+        let deferredPrompt;
+        const btnInstallApp = document.getElementById('btnInstallApp');
+        
+        // Basic iOS Detection
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+        });
+
+        btnInstallApp.addEventListener('click', async () => {
+            if (isIOS) {
+                alert("要在 iPhone 上安裝：\n\n1. 點擊瀏覽器底部的「分享」圖示 (方格加向上箭頭)\n2. 選擇「加入主畫面」\n\nTo install on iPhone:\n1. Tap the Share icon at the bottom\n2. Select 'Add to Home Screen'");
+                return;
+            }
+
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    console.log('User accepted the install prompt');
+                }
+                deferredPrompt = null;
+            } else {
+                alert("此瀏覽器可能不支援自動安裝，或者應用程式已經安裝。請參閱下方的安裝指南。\n\nThis browser may not support automatic installation, or the app is already installed. Please refer to the setup guide below.");
+            }
+        });
+        // --- End App Install Logic ---
+
+
         let currentMode = 'edu'; 
         let isRecordModeActive = false;
         let isRecording = false;
