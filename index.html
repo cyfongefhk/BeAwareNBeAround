@@ -6,9 +6,10 @@
     <title>Epilepsy Foundation HK - Be Aware n' Be Around</title>
     <style>
         :root {
-            --primary-orange: #f57c00; 
-            --light-orange: #ffe0b2;
-            --dark-orange: #e65100;
+            --red: #d32f2f;
+            --orange: #f57c00;
+            --yellow: #fbc02d;
+            --primary-brand: #f57c00; 
             --bg: #fff9f5;
             --text: #333;
         }
@@ -24,21 +25,41 @@
             text-align: center;
         }
         .header {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            width: 100%;
+            max-width: 400px;
         }
         .logo-placeholder {
-            background-color: var(--primary-orange);
+            background-color: var(--text);
             color: white;
             padding: 10px 20px;
             border-radius: 4px;
             font-size: 14px;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             display: inline-block;
             font-weight: bold;
         }
         h2 {
-            color: var(--dark-orange);
+            color: var(--primary-brand);
+            margin: 5px 0;
+            font-size: 24px;
+        }
+        .subtitle {
+            font-size: 16px;
+            color: #555;
             margin-top: 0;
+            margin-bottom: 15px;
+            font-weight: normal;
+        }
+        .counter-box {
+            background-color: #e0e0e0;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #444;
+            display: inline-block;
+            margin-bottom: 20px;
         }
         .controls {
             margin-bottom: 20px;
@@ -48,7 +69,7 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             width: 100%;
             max-width: 320px;
-            border: 1px solid var(--light-orange);
+            border: 1px solid #ccc;
         }
         .toggle-group {
             display: flex;
@@ -63,8 +84,8 @@
             border: 1px solid #ccc;
         }
         select {
-            border-color: var(--primary-orange);
-            color: var(--dark-orange);
+            border-color: var(--primary-brand);
+            color: var(--primary-brand);
             font-weight: bold;
         }
         button.record-toggle {
@@ -75,15 +96,15 @@
         }
         button.record-toggle.active {
             background-color: #ffcc80;
-            color: var(--dark-orange);
-            border-color: var(--dark-orange);
+            color: #d32f2f;
+            border-color: #d32f2f;
             font-weight: bold;
         }
         .grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
-            background: var(--light-orange);
+            background: #e0e0e0;
             padding: 20px;
             border-radius: 16px;
             box-shadow: inset 0 4px 8px rgba(0,0,0,0.1);
@@ -103,7 +124,6 @@
             align-items: center;
             justify-content: center;
             user-select: none;
-            background-color: var(--primary-orange);
             -webkit-tap-highlight-color: transparent;
         }
         .btn-toy:active {
@@ -111,28 +131,83 @@
             box-shadow: 0 0 0 rgba(0,0,0,0.15);
         }
         
-        /* Animation for recording state */
+        /* Reverted Colors */
+        .btn-top-left, .btn-top-right { background-color: var(--red); }
+        .btn-bottom-left { background-color: var(--orange); }
+        .btn-bottom-right { background-color: var(--yellow); }
+        
+        /* Recording Animation */
         @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(211, 47, 47, 0.7); background-color: #d32f2f; }
-            50% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(211, 47, 47, 0); background-color: #ff5252; }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(211, 47, 47, 0); background-color: #d32f2f; }
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(211, 47, 47, 0.7); }
+            50% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(211, 47, 47, 0); border: 3px solid white;}
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(211, 47, 47, 0); }
         }
         .recording-pulse {
-            animation: pulse 1.5s infinite;
+            animation: pulse 1s infinite;
+            background-color: #ff5252 !important;
+        }
+        @keyframes flashText {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        .recording-status {
+            color: #d32f2f;
+            font-weight: bold;
+            animation: flashText 1s infinite;
         }
 
         #status {
-            margin-top: 20px;
+            margin-top: 15px;
             font-weight: bold;
-            color: var(--dark-orange);
+            color: var(--primary-brand);
             height: 24px;
         }
-        .help-text {
-            font-size: 12px; 
-            color: #666; 
-            margin-top: 10px;
-            display: none;
+
+        /* Static Instructions Text */
+        .instruction-box {
+            margin-top: 25px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            width: 100%;
+            max-width: 320px;
+            text-align: left;
+            font-size: 14px;
+            line-height: 1.5;
         }
+        .instruction-box h4 { margin: 0 0 10px 0; color: var(--primary-brand); text-align: center; }
+        .instruction-box p { margin: 5px 0; }
+        
+        /* Retractable Tab (Details/Summary) */
+        .setup-guide {
+            margin-top: 20px;
+            margin-bottom: 40px;
+            width: 100%;
+            max-width: 350px;
+            background: #fff;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            overflow: hidden;
+        }
+        .setup-guide summary {
+            background-color: #eeeeee;
+            padding: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            list-style: none;
+            outline: none;
+        }
+        .setup-guide summary::-webkit-details-marker { display: none; }
+        .setup-guide .content {
+            padding: 15px;
+            text-align: left;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        .setup-guide h5 { margin: 10px 0 5px 0; color: var(--primary-brand); font-size: 14px; }
+        .setup-guide ul { margin: 0; padding-left: 20px; }
     </style>
 </head>
 <body>
@@ -142,6 +217,13 @@
             香港腦癇基金會<br>EPILEPSY FOUNDATION<br>OF HONG KONG
         </div>
         <h2>Be Aware n' Be Around</h2>
+        <div class="subtitle">
+            處理急性腦癇發作的口訣<br>
+            <small>(How to manage a patient with acute seizure)</small>
+        </div>
+        <div class="counter-box">
+            全球點擊次數 (Global Clicks): <span id="globalCounter">12,543</span>
+        </div>
     </div>
 
     <div class="controls">
@@ -153,21 +235,43 @@
             </select>
         </div>
         <button id="recordToggle" class="record-toggle" style="display: none;">錄音模式：關閉</button>
-        <p id="helpText" class="help-text">
-            在玩具模式下，開啟「錄音模式」，然後點擊按鍵進行錄音（最長60秒）。再次點擊停止。關閉「錄音模式」即可播放。
-        </p>
     </div>
 
     <div class="grid">
-        <button class="btn-toy" data-id="1">守</button>
-        <button class="btn-toy" data-id="2">望</button>
-        <button class="btn-toy" data-id="3">相</button>
-        <button class="btn-toy" data-id="4">助</button>
+        <button class="btn-toy btn-top-left" data-id="1">守</button>
+        <button class="btn-toy btn-top-right" data-id="2">望</button>
+        <button class="btn-toy btn-bottom-left" data-id="3">相</button>
+        <button class="btn-toy btn-bottom-right" data-id="4">助</button>
     </div>
 
     <div id="status">教育模式：請點擊按鍵聆聽指示。</div>
 
-    <!-- Hidden audio element for more reliable mobile playback -->
+    <!-- Static Instruction Text -->
+    <div class="instruction-box">
+        <h4>守望相助 急救指南</h4>
+        <p><strong>守 (Stay calm):</strong> 保持鎮定，記錄抽搐開始及持續的時間。</p>
+        <p><strong>望 (Observe):</strong> 觀察並保護患者。移開附近危險物品，用軟物墊著患者頭部。</p>
+        <p><strong>相 (Recovery position):</strong> 將患者輕輕翻側，保持呼吸道暢通。</p>
+        <p><strong>助 (Seek help):</strong> 尋求協助。切勿強行將任何物品塞入患者口中。陪伴患者直至清醒，若超過五分鐘請召喚救護車。</p>
+    </div>
+
+    <!-- Retractable Setup Tab -->
+    <details class="setup-guide">
+        <summary>📲 安裝及使用指南 (Setup & Operation Guide) ▼</summary>
+        <div class="content">
+            <h5>如何安裝至手機 (How to Install)</h5>
+            <ul>
+                <li><strong>iPhone (iOS):</strong> 使用 Safari 瀏覽器開啟此網頁，點擊底部中央的「分享」圖示 <span>(方格加向上箭頭)</span>，然後向下滑動並選擇「加入主畫面」。</li>
+                <li><strong>Android:</strong> 使用 Chrome 瀏覽器開啟此網頁，點擊右上角的「選單」圖示 (三點)，然後選擇「加到主畫面」。</li>
+            </ul>
+            <h5>如何操作 (How to Operate)</h5>
+            <ul>
+                <li><strong>教育模式:</strong> 為預設模式。點擊顏色按鍵，手機會自動語音朗讀該步驟的急救指示。</li>
+                <li><strong>玩具模式:</strong> 在上方選單切換。點擊「錄音模式：關閉」按鈕將其開啟。點擊任何顏色按鍵開始錄製您自己的聲音（最長60秒），再次點擊停止。關閉錄音模式後，點擊按鍵即可播放您的錄音。</li>
+            </ul>
+        </div>
+    </details>
+
     <audio id="globalAudioPlayer" playsinline></audio>
 
     <script>
@@ -180,10 +284,19 @@
         let recordingTimeout;
         let supportedMimeType = '';
 
+        // Simulated Global Counter Logic
+        let globalClicks = parseInt(localStorage.getItem('efhk_global_clicks')) || 12543;
+        const counterDisplay = document.getElementById('globalCounter');
+        
+        function incrementCounter() {
+            globalClicks++;
+            localStorage.setItem('efhk_global_clicks', globalClicks);
+            counterDisplay.innerText = globalClicks.toLocaleString();
+        }
+
         const userAudio = { 1: null, 2: null, 3: null, 4: null };
         const globalAudioPlayer = document.getElementById('globalAudioPlayer');
         
-        // Translated clinical instructions
         const eduContent = {
             1: "守。保持鎮定，記錄抽搐開始及持續的時間。",
             2: "望。觀察並保護患者。移開附近危險物品，用軟物墊著患者頭部。",
@@ -194,27 +307,22 @@
         const modeSelect = document.getElementById('modeSelect');
         const recordToggle = document.getElementById('recordToggle');
         const statusDiv = document.getElementById('status');
-        const helpText = document.getElementById('helpText');
         const buttons = document.querySelectorAll('.btn-toy');
 
-        // Mode Switching
         modeSelect.addEventListener('change', (e) => {
             currentMode = e.target.value;
             if (currentMode === 'edu') {
                 recordToggle.style.display = 'none';
-                helpText.style.display = 'none';
                 isRecordModeActive = false;
                 recordToggle.classList.remove('active');
                 recordToggle.innerText = "錄音模式：關閉";
                 setStatus("教育模式：請點擊按鍵聆聽指示。");
             } else {
                 recordToggle.style.display = 'block';
-                helpText.style.display = 'block';
                 setStatus("玩具模式：準備就緒。");
             }
         });
 
-        // Toggle Recording Status
         recordToggle.addEventListener('click', async () => {
             if (!isRecordModeActive) {
                 try {
@@ -222,7 +330,7 @@
                     setupMediaRecorder(stream);
                     isRecordModeActive = true;
                     recordToggle.classList.add('active');
-                    recordToggle.innerText = "錄音模式：開啟 (請點擊按鍵)";
+                    recordToggle.innerText = "🔴 錄音模式：開啟 (請點擊按鍵)";
                     setStatus("準備錄音。");
                 } catch (err) {
                     alert("需要麥克風權限才能進行錄音。");
@@ -237,7 +345,6 @@
             }
         });
 
-        // Setup Media Recorder with Cross-Browser MIME type detection
         function setupMediaRecorder(stream) {
             const types = ['audio/webm', 'audio/mp4', 'audio/ogg', ''];
             for (let i = 0; i < types.length; i++) {
@@ -264,15 +371,14 @@
                 setStatus(`已儲存至按鍵 ${currentRecordingId}。`);
                 isRecording = false;
                 
-                // Remove animation
                 document.querySelector(`[data-id="${currentRecordingId}"]`).classList.remove('recording-pulse');
             };
         }
 
-        // Handle button clicks
         buttons.forEach(btn => {
             btn.addEventListener('click', () => {
                 const id = btn.getAttribute('data-id');
+                incrementCounter(); // Trigger global click counter
 
                 if (currentMode === 'edu') {
                     playEducationTTS(id);
@@ -289,7 +395,7 @@
         function playEducationTTS(id) {
             window.speechSynthesis.cancel();
             const utterance = new SpeechSynthesisUtterance(eduContent[id]);
-            utterance.lang = 'zh-HK'; // Cantonese voice
+            utterance.lang = 'zh-HK'; 
             window.speechSynthesis.speak(utterance);
             setStatus(`播放教育步驟 ${id}...`);
         }
@@ -303,9 +409,8 @@
                 mediaRecorder.start();
                 isRecording = true;
                 
-                // Add animation
                 btnElement.classList.add('recording-pulse');
-                setStatus(`正在按鍵 ${id} 錄音... (最長60秒)`);
+                statusDiv.innerHTML = `<span class="recording-status">🔴 正在按鍵 ${id} 錄音... (最長60秒)</span>`;
                 
                 recordingTimeout = setTimeout(() => {
                     if (mediaRecorder.state === "recording") {
