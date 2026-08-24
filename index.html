@@ -167,7 +167,7 @@
         }
         .youtube-container iframe {
             width: 100%;
-            height: 180px; /* Standard 16:9 ratio for 320px width */
+            height: 180px; 
             border: none;
             display: block;
         }
@@ -190,7 +190,7 @@
             height: 24px;
         }
 
-        /* Audio Player Custom UI - NOW ONLY FOR TOY MODE */
+        /* Audio Player Custom UI - ONLY FOR TOY MODE */
         .audio-player {
             width: 100%;
             max-width: 320px;
@@ -299,7 +299,7 @@
         }
         .linktree-btn {
             display: block;
-            background-color: #43E660; /* Linktree brand color style */
+            background-color: #43E660; 
             color: #111;
             text-decoration: none;
             padding: 15px;
@@ -318,7 +318,6 @@
 
     <div class="header">
         <div class="logo-container">
-            <!-- Includes an onerror fallback script to display text if image_2.png is not found -->
             <img src="image_2.png" alt="Epilepsy Foundation of Hong Kong" class="app-logo" 
                  onerror="this.style.display='none'; document.getElementById('fallbackLogo').style.display='inline-block';">
             <div id="fallbackLogo" class="fallback-logo">
@@ -355,16 +354,16 @@
 
     <div id="status">教育模式：請點擊按鍵聆聽指示。</div>
 
-    <!-- YouTube Embed -->
+    <!-- YouTube Embed with parameters added to suppress annotations -->
     <div class="youtube-container">
         <div class="youtube-label">▶️ 急性腦癇發作處理動畫</div>
-        <iframe src="https://www.youtube.com/embed/g9909mQ2dRo" 
+        <iframe src="https://www.youtube.com/embed/g9909mQ2dRo?iv_load_policy=3&rel=0&modestbranding=1" 
                 title="Acute Seizure Animation" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                 allowfullscreen></iframe>
     </div>
 
-    <!-- Custom Audio Player UI (Only shows in Toy Mode now) -->
+    <!-- Custom Audio Player UI (Toy Mode Only) -->
     <div id="audioPlayerUI" class="audio-player">
         <div class="player-status" id="playerStatus">正在播放 (Playing)</div>
         <div class="player-controls">
@@ -405,7 +404,6 @@
         </div>
     </details>
 
-    <!-- Linktree Footer -->
     <div class="footer-linktree">
         <a href="https://linktr.ee/EpilepsyFoundationOfHongKong" target="_blank" class="linktree-btn">
             🔗 了解更多 Epilepsy Foundation HK
@@ -454,7 +452,6 @@
         const statusDiv = document.getElementById('status');
         const buttons = document.querySelectorAll('.btn-toy');
 
-        // Audio Player Controls Logic (Only used for Toy Mode now)
         globalAudioPlayer.addEventListener('timeupdate', () => {
             if(globalAudioPlayer.duration) {
                 const progress = (globalAudioPlayer.currentTime / globalAudioPlayer.duration) * 100;
@@ -581,7 +578,6 @@
                 incrementCounter(); 
 
                 if (currentMode === 'edu') {
-                    // Force hide audio UI in education mode
                     audioPlayerUI.style.display = 'none'; 
                     playEducationTTS(id);
                 } else if (currentMode === 'toy') {
@@ -595,7 +591,6 @@
         });
 
         function playEducationTTS(id) {
-            // Stop any playing toy-mode audio
             globalAudioPlayer.pause(); 
             window.speechSynthesis.cancel();
             
@@ -636,7 +631,7 @@
 
         function playUserAudio(id) {
             if (userAudio[id]) {
-                window.speechSynthesis.cancel(); // Stop TTS if switching rapidly
+                window.speechSynthesis.cancel(); 
                 globalAudioPlayer.src = userAudio[id];
                 showAudioUI(id);
                 
