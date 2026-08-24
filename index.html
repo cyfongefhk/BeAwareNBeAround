@@ -29,17 +29,15 @@
             width: 100%;
             max-width: 400px;
         }
-        .logo-placeholder {
-            background-color: var(--text);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 4px;
-            font-size: 14px;
+        .logo-container {
             margin-bottom: 10px;
-            display: inline-block;
-            font-weight: bold;
         }
-        h2 {
+        .app-logo {
+            max-width: 100%;
+            height: auto;
+            max-height: 100px;
+        }
+        .theme-title {
             color: var(--primary-brand);
             margin: 5px 0;
             font-size: 24px;
@@ -62,7 +60,7 @@
             margin-bottom: 20px;
         }
         .controls {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             padding: 15px;
             background: white;
             border-radius: 12px;
@@ -70,6 +68,7 @@
             width: 100%;
             max-width: 320px;
             border: 1px solid #ccc;
+            box-sizing: border-box;
         }
         .toggle-group {
             display: flex;
@@ -131,12 +130,10 @@
             box-shadow: 0 0 0 rgba(0,0,0,0.15);
         }
         
-        /* Reverted Colors */
         .btn-top-left, .btn-top-right { background-color: var(--red); }
         .btn-bottom-left { background-color: var(--orange); }
         .btn-bottom-right { background-color: var(--yellow); }
         
-        /* Recording Animation */
         @keyframes pulse {
             0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(211, 47, 47, 0.7); }
             50% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(211, 47, 47, 0); border: 3px solid white;}
@@ -164,7 +161,61 @@
             height: 24px;
         }
 
-        /* Static Instructions Text */
+        /* Audio Player Custom UI */
+        .audio-player {
+            width: 100%;
+            max-width: 320px;
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-top: 15px;
+            border: 2px solid var(--primary-brand);
+            box-sizing: border-box;
+            display: none; /* Hidden by default */
+        }
+        .player-status {
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--primary-brand);
+            margin-bottom: 10px;
+            text-align: left;
+        }
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .progress-bar {
+            flex-grow: 1;
+            accent-color: var(--primary-brand);
+            height: 6px;
+        }
+        .ctrl-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .text-btn {
+            font-size: 12px;
+            font-weight: bold;
+            color: var(--primary-brand);
+            background: #ffe0b2;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+        .speed-select {
+            font-size: 12px;
+            padding: 4px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
         .instruction-box {
             margin-top: 25px;
             background: white;
@@ -176,11 +227,11 @@
             text-align: left;
             font-size: 14px;
             line-height: 1.5;
+            box-sizing: border-box;
         }
         .instruction-box h4 { margin: 0 0 10px 0; color: var(--primary-brand); text-align: center; }
         .instruction-box p { margin: 5px 0; }
         
-        /* Retractable Tab (Details/Summary) */
         .setup-guide {
             margin-top: 20px;
             margin-bottom: 40px;
@@ -190,6 +241,7 @@
             border-radius: 8px;
             border: 1px solid #ccc;
             overflow: hidden;
+            box-sizing: border-box;
         }
         .setup-guide summary {
             background-color: #eeeeee;
@@ -213,10 +265,10 @@
 <body>
 
     <div class="header">
-        <div class="logo-placeholder">
-            香港腦癇基金會<br>EPILEPSY FOUNDATION<br>OF HONG KONG
+        <div class="logo-container">
+            <img src="image_2.png" alt="Epilepsy Foundation of Hong Kong" class="app-logo">
         </div>
-        <h2>Be Aware n' Be Around</h2>
+        <h2 class="theme-title">Be Aware n' Be Around</h2>
         <div class="subtitle">
             處理急性腦癇發作的口訣<br>
             <small>(How to manage a patient with acute seizure)</small>
@@ -246,7 +298,23 @@
 
     <div id="status">教育模式：請點擊按鍵聆聽指示。</div>
 
-    <!-- Static Instruction Text -->
+    <!-- Custom Audio Player UI -->
+    <div id="audioPlayerUI" class="audio-player">
+        <div class="player-status" id="playerStatus">正在播放 (Playing)</div>
+        <div class="player-controls">
+            <button id="btnPlayPause" class="ctrl-btn">⏸️</button>
+            <input type="range" id="progressBar" class="progress-bar" min="0" max="100" value="0">
+            <button id="btnForward10" class="ctrl-btn text-btn">+10s</button>
+            <select id="playbackSpeed" class="speed-select">
+                <option value="1">1.0x</option>
+                <option value="1.25">1.25x</option>
+                <option value="1.5">1.5x</option>
+                <option value="1.75">1.75x</option>
+                <option value="2">2.0x</option>
+            </select>
+        </div>
+    </div>
+
     <div class="instruction-box">
         <h4>守望相助 急救指南</h4>
         <p><strong>守 (Stay calm):</strong> 保持鎮定，記錄抽搐開始及持續的時間。</p>
@@ -255,7 +323,6 @@
         <p><strong>助 (Seek help):</strong> 尋求協助。切勿強行將任何物品塞入患者口中。陪伴患者直至清醒，若超過五分鐘請召喚救護車。</p>
     </div>
 
-    <!-- Retractable Setup Tab -->
     <details class="setup-guide">
         <summary>📲 安裝及使用指南 (Setup & Operation Guide) ▼</summary>
         <div class="content">
@@ -266,8 +333,8 @@
             </ul>
             <h5>如何操作 (How to Operate)</h5>
             <ul>
-                <li><strong>教育模式:</strong> 為預設模式。點擊顏色按鍵，手機會自動語音朗讀該步驟的急救指示。</li>
-                <li><strong>玩具模式:</strong> 在上方選單切換。點擊「錄音模式：關閉」按鈕將其開啟。點擊任何顏色按鍵開始錄製您自己的聲音（最長60秒），再次點擊停止。關閉錄音模式後，點擊按鍵即可播放您的錄音。</li>
+                <li><strong>教育模式:</strong> 為預設模式。點擊顏色按鍵，手機會播放該步驟的急救指示。</li>
+                <li><strong>玩具模式:</strong> 在上方選單切換。點擊「錄音模式：關閉」按鈕將其開啟。點擊任何顏色按鍵開始錄製您自己的聲音（最長60秒），再次點擊停止。關閉錄音模式後，點擊按鍵即可播放及調整速度。</li>
             </ul>
         </div>
     </details>
@@ -284,7 +351,6 @@
         let recordingTimeout;
         let supportedMimeType = '';
 
-        // Simulated Global Counter Logic
         let globalClicks = parseInt(localStorage.getItem('efhk_global_clicks')) || 12543;
         const counterDisplay = document.getElementById('globalCounter');
         
@@ -296,6 +362,12 @@
 
         const userAudio = { 1: null, 2: null, 3: null, 4: null };
         const globalAudioPlayer = document.getElementById('globalAudioPlayer');
+        const audioPlayerUI = document.getElementById('audioPlayerUI');
+        const playerStatus = document.getElementById('playerStatus');
+        const progressBar = document.getElementById('progressBar');
+        const btnPlayPause = document.getElementById('btnPlayPause');
+        const btnForward10 = document.getElementById('btnForward10');
+        const playbackSpeed = document.getElementById('playbackSpeed');
         
         const eduContent = {
             1: "守。保持鎮定，記錄抽搐開始及持續的時間。",
@@ -309,8 +381,60 @@
         const statusDiv = document.getElementById('status');
         const buttons = document.querySelectorAll('.btn-toy');
 
+        // Audio Player Controls Logic
+        globalAudioPlayer.addEventListener('timeupdate', () => {
+            if(globalAudioPlayer.duration) {
+                const progress = (globalAudioPlayer.currentTime / globalAudioPlayer.duration) * 100;
+                progressBar.value = progress;
+            }
+        });
+
+        globalAudioPlayer.addEventListener('ended', () => {
+            btnPlayPause.innerText = '▶️';
+            progressBar.value = 0;
+            setTimeout(() => { audioPlayerUI.style.display = 'none'; }, 1500);
+        });
+
+        progressBar.addEventListener('input', (e) => {
+            if(globalAudioPlayer.duration) {
+                const scrubTime = (e.target.value / 100) * globalAudioPlayer.duration;
+                globalAudioPlayer.currentTime = scrubTime;
+            }
+        });
+
+        btnForward10.addEventListener('click', () => {
+            if(globalAudioPlayer.duration) {
+                globalAudioPlayer.currentTime = Math.min(globalAudioPlayer.currentTime + 10, globalAudioPlayer.duration);
+            }
+        });
+
+        playbackSpeed.addEventListener('change', (e) => {
+            globalAudioPlayer.playbackRate = parseFloat(e.target.value);
+        });
+
+        btnPlayPause.addEventListener('click', () => {
+            if(globalAudioPlayer.paused) {
+                globalAudioPlayer.play();
+                btnPlayPause.innerText = '⏸️';
+            } else {
+                globalAudioPlayer.pause();
+                btnPlayPause.innerText = '▶️';
+            }
+        });
+
+        function showAudioUI(id) {
+            audioPlayerUI.style.display = 'block';
+            playerStatus.innerText = `正在播放按鍵 ${id} (Playing Button ${id})`;
+            btnPlayPause.innerText = '⏸️';
+            playbackSpeed.value = "1";
+            globalAudioPlayer.playbackRate = 1;
+            progressBar.value = 0;
+        }
+
         modeSelect.addEventListener('change', (e) => {
             currentMode = e.target.value;
+            audioPlayerUI.style.display = 'none';
+            globalAudioPlayer.pause();
             if (currentMode === 'edu') {
                 recordToggle.style.display = 'none';
                 isRecordModeActive = false;
@@ -332,6 +456,8 @@
                     recordToggle.classList.add('active');
                     recordToggle.innerText = "🔴 錄音模式：開啟 (請點擊按鍵)";
                     setStatus("準備錄音。");
+                    audioPlayerUI.style.display = 'none';
+                    globalAudioPlayer.pause();
                 } catch (err) {
                     alert("需要麥克風權限才能進行錄音。");
                     console.error(err);
@@ -378,10 +504,10 @@
         buttons.forEach(btn => {
             btn.addEventListener('click', () => {
                 const id = btn.getAttribute('data-id');
-                incrementCounter(); // Trigger global click counter
+                incrementCounter(); 
 
                 if (currentMode === 'edu') {
-                    playEducationTTS(id);
+                    playEducationAudio(id);
                 } else if (currentMode === 'toy') {
                     if (isRecordModeActive) {
                         handleRecording(id, btn);
@@ -392,12 +518,24 @@
             });
         });
 
-        function playEducationTTS(id) {
+        function playEducationAudio(id) {
             window.speechSynthesis.cancel();
-            const utterance = new SpeechSynthesisUtterance(eduContent[id]);
-            utterance.lang = 'zh-HK'; 
-            window.speechSynthesis.speak(utterance);
-            setStatus(`播放教育步驟 ${id}...`);
+            
+            // Look for physical audio files (edu_1.mp3, etc.) to support the sliding progress bar.
+            globalAudioPlayer.src = `edu_${id}.mp3`;
+            showAudioUI(id);
+            
+            globalAudioPlayer.play().then(() => {
+                setStatus(`播放教育步驟 ${id}...`);
+            }).catch(error => {
+                // Fallback to TTS if the mp3 file is not found on the server.
+                console.warn("Audio file missing, falling back to Text-to-Speech:", error);
+                audioPlayerUI.style.display = 'none'; // Hide UI since TTS cannot be scrubbed
+                const utterance = new SpeechSynthesisUtterance(eduContent[id]);
+                utterance.lang = 'zh-HK'; 
+                window.speechSynthesis.speak(utterance);
+                setStatus(`播放教育步驟 ${id} (語音合成模式)...`);
+            });
         }
 
         function handleRecording(id, btnElement) {
@@ -432,11 +570,15 @@
         function playUserAudio(id) {
             if (userAudio[id]) {
                 globalAudioPlayer.src = userAudio[id];
-                globalAudioPlayer.play().catch(error => {
+                showAudioUI(id);
+                
+                globalAudioPlayer.play().then(() => {
+                    setStatus(`播放按鍵 ${id}...`);
+                }).catch(error => {
                     console.error("Playback failed:", error);
                     setStatus("播放失敗，請確保手機未靜音並調高音量。");
+                    audioPlayerUI.style.display = 'none';
                 });
-                setStatus(`播放按鍵 ${id}...`);
             } else {
                 setStatus("此按鍵尚未有錄音。");
             }
