@@ -326,7 +326,7 @@
         }
         .install-btn-small:active { transform: scale(0.94); }
 
-        .what-is-guide {
+        .what-is-guide, .faq-guide {
             margin-bottom: 20px;
             width: 100%;
             max-width: 350px;
@@ -336,7 +336,7 @@
             overflow: hidden;
             box-sizing: border-box;
         }
-        .what-is-guide summary {
+        .what-is-guide summary, .faq-guide summary {
             background-color: #ffe0b2;
             color: var(--dark-orange);
             padding: 15px;
@@ -347,16 +347,16 @@
             text-align: center;
             font-size: 14px;
         }
-        .what-is-guide summary::-webkit-details-marker { display: none; }
-        .what-is-guide .content {
+        .what-is-guide summary::-webkit-details-marker, .faq-guide summary::-webkit-details-marker { display: none; }
+        .what-is-guide .content, .faq-guide .content {
             padding: 15px;
             text-align: left;
             font-size: 13px;
             line-height: 1.6;
         }
-        .what-is-guide h5 { margin: 15px 0 5px 0; color: var(--primary-brand); font-size: 14px; }
-        .what-is-guide p { margin: 5px 0; font-style: italic; color: #555;}
-        .what-is-guide ul { margin: 0; padding-left: 20px; }
+        .what-is-guide h5, .faq-guide h5 { margin: 15px 0 5px 0; color: var(--primary-brand); font-size: 14px; }
+        .what-is-guide p, .faq-guide p { margin: 5px 0; font-style: italic; color: #555;}
+        .faq-guide h5 { font-style: normal; font-weight: bold; color: var(--dark-orange); }
 
         .footer-linktree {
             margin-top: 10px;
@@ -390,7 +390,6 @@
 
     <div class="header">
         <div class="logo-container">
-            <!-- Remember to update src to your live web link when hosting -->
             <img src="image_4.png" alt="Epilepsy Foundation of Hong Kong" class="app-logo" 
                  onerror="this.style.display='none'; document.getElementById('fallbackLogo').style.display='inline-block';">
             <div id="fallbackLogo" class="fallback-logo">
@@ -455,12 +454,12 @@
                 <h5 id="setupTitle1">如何安裝至手機 (How to Install)</h5>
                 <ul id="setupList1">
                     <li><strong>iPhone (iOS):</strong> 使用 Safari 瀏覽器開啟此網頁，點擊底部中央的「分享」圖示，然後選擇「加入主畫面」。</li>
-                    <li><strong>Android:</strong> 使用 Chrome 瀏覽器開啟，點擊右上角「選單」(三點)，然後選擇「加到主畫面」。</li>
+                    <li><strong>Android:</strong> 使用 Chrome 瀏覽器開啟，點擊右上角「選單」(三點), 然後選擇「加到主畫面」。</li>
                 </ul>
                 <h5 id="setupTitle2">如何操作 (How to Operate)</h5>
                 <ul id="setupList2">
                     <li><strong>教育模式:</strong> 為預設模式。點擊顏色按鍵，手機會播放該步驟的急救指示。</li>
-                    <li><strong>玩具模式:</strong> 點擊「錄音模式：關閉」將其開啟。點擊任何顏色按鍵錄製聲音（最長60秒），再次點擊停止。關閉後點擊按鍵即可播放。</li>
+                    <li><strong>玩具模式:</strong> 點擊「錄音模式：關閉」將其開啟。點擊任何顏色按鍵錄製聲音（最長60秒）, 再次點擊停止。關閉後點擊按鍵即可播放。</li>
                 </ul>
             </div>
         </details>
@@ -468,6 +467,7 @@
         <button id="btnInstallApp" class="install-btn-small">📥 安裝 App</button>
     </div>
 
+    <!-- What is Be Aware Section -->
     <details class="what-is-guide">
         <summary id="textWhatIsSummary">💡 什麼是 Be Aware n' Be Around? ▼</summary>
         <div class="content">
@@ -488,6 +488,28 @@
                 <li><strong>Position safely:</strong> Turn the person gently onto their side (recovery position) once jerking stops to keep their airway clear.</li>
                 <li><strong>Provide Post-Seizure Support:</strong> Stay by their side through the post-ictal confusion phase until they are fully alert, offering calm reassurance.</li>
             </ul>
+        </div>
+    </details>
+
+    <!-- Foldable FAQ Section -->
+    <details class="faq-guide">
+        <summary id="textFaqSummary">❓ 常見問題 (FAQ) ▼</summary>
+        <div class="content" id="faqContent">
+            <h5>Q1: 為什麼教育模式沒有聲音，或 Putonghua 語音無法正常發音？</h5>
+            <p><strong>A:</strong> 本應用程式使用手機內置的語音引擎 (Text-to-Speech)。若語音無法發聲或未按預期讀出普通話/廣東話，請依照下列手機設定檢查：</p>
+            <ul>
+                <li><strong>iPhone (iOS):</strong> 請前往「設定」>「輔助使用」>「朗讀內容」>「語音」，下載對應的語言包（如普通話或廣東話）。同時請確保手機側邊的「靜音開關」已關閉並調高媒體音量。</li>
+                <li><strong>Android:</strong> 請前往「設定」>「系統」/「輔助使用」>「文字轉語音 (Text-to-Speech) 輸出」，進入偏好引擎設定下載並安裝「中文 (中國)」或「中文 (香港)」語音數據。</li>
+            </ul>
+
+            <h5>Q2: 玩具模式錄音失敗或無法播放怎麼辦？</h5>
+            <p><strong>A:</strong> 錄音功能需要手機麥克風權限。若無法錄音，請檢查瀏覽器權限設定，允許此網頁存取麥克風。此外，請確保您的手機未處於靜音模式。</p>
+
+            <h5>Q3: 如何確保離線時也能順暢使用此應用程式？</h5>
+            <p><strong>A:</strong> 建議您點擊上方的「📥 安裝 App」按鈕（或依照安裝指南將網頁加入主畫面），將其作為 PWA (漸進式網頁應用程式) 下載安裝，安裝後即可享有類似原生 App 的流暢體驗。</p>
+
+            <h5>Q4: 為什麼我的點擊次數沒有立即更新？</h5>
+            <p><strong>A:</strong> 全球點擊次數計數器目前會在本地裝置暫存並模擬動態增長。當部署至正式官方伺服器後，將會全面連接雲端資料庫以同步全球使用者的真實數據。</p>
         </div>
     </details>
 
@@ -527,10 +549,25 @@
                 setupSummary: "📲 安裝及使用指南 ▼",
                 installBtn: "📥 安裝 App",
                 whatIsSummary: "💡 什麼是 Be Aware n' Be Around? ▼",
+                faqSummary: "❓ 常見問題 (FAQ) ▼",
                 setupT1: "如何安裝至手機 (How to Install)",
-                setupL1: "<li><strong>iPhone (iOS):</strong> 使用 Safari 瀏覽器開啟此網頁，點擊底部中央的「分享」圖示，然後選擇「加入主畫面」。</li><li><strong>Android:</strong> 使用 Chrome 瀏覽器開啟，點擊右上角「選單」(三點)，然後選擇「加到主畫面」。</li>",
+                setupL1: "<li><strong>iPhone (iOS):</strong> 使用 Safari 瀏覽器開啟此網頁，點擊底部中央的「分享」圖示，然後選擇「加入主畫面」。</li><li><strong>Android:</strong> 使用 Chrome 瀏覽器開啟，點擊右上角「選單」(三點), 然後選擇「加到主畫面」。</li>",
                 setupT2: "如何操作 (How to Operate)",
-                setupL2: "<li><strong>教育模式:</strong> 為預設模式。點擊顏色按鍵，手機會播放該步驟的急救指示。</li><li><strong>玩具模式:</strong> 點擊「錄音模式：關閉」將其開啟。點擊任何顏色按鍵錄製聲音（最長60秒），再次點擊停止。關閉後點擊按鍵即可播放。</li>",
+                setupL2: "<li><strong>教育模式:</strong> 為預設模式。點擊顏色按鍵，手機會播放該步驟的急救指示。</li><li><strong>玩具模式:</strong> 點擊「錄音模式：關閉」將其開啟。點擊任何顏色按鍵錄製聲音（最長60秒）, 再次點擊停止。關閉後點擊按鍵即可播放。</li>",
+                faqContentHtml: `
+                    <h5>Q1: 為什麼教育模式沒有聲音，或 Putonghua 語音無法正常發音？</h5>
+                    <p><strong>A:</strong> 本應用程式使用手機內置的語音引擎 (Text-to-Speech)。若語音無法發聲或未按預期讀出普通話/廣東話，請依照下列手機設定檢查：</p>
+                    <ul>
+                        <li><strong>iPhone (iOS):</strong> 請前往「設定」>「輔助使用」>「朗讀內容」>「語音」，下載對應的語言包（如普通話或廣東話）。同時請確保手機側邊的「靜音開關」已關閉並調高媒體音量。</li>
+                        <li><strong>Android:</strong> 請前往「設定」>「系統」/「輔助使用」>「文字轉語音 (Text-to-Speech) 輸出」，進入偏好引擎設定下載並安裝「中文 (中國)」或「中文 (香港)」語音數據。</li>
+                    </ul>
+                    <h5>Q2: 玩具模式錄音失敗或無法播放怎麼辦？</h5>
+                    <p><strong>A:</strong> 錄音功能需要手機麥克風權限。若無法錄音，請檢查瀏覽器權限設定，允許此網頁存取麥克風。此外，請確保您的手機未處於靜音模式。</p>
+                    <h5>Q3: 如何確保離線時也能順暢使用此應用程式？</h5>
+                    <p><strong>A:</strong> 建議您點擊上方的「📥 安裝 App」按鈕（或依照安裝指南將網頁加入主畫面），將其作為 PWA (漸進式網頁應用程式) 下載安裝，安裝後即可享有類似原生 App 的流暢體驗。</p>
+                    <h5>Q4: 為什麼我的點擊次數沒有立即更新？</h5>
+                    <p><strong>A:</strong> 全球點擊次數計數器目前會在本地裝置暫存並模擬動態增長。當部署至正式官方伺服器後，將會全面連接雲端資料庫以同步全球使用者的真實數據。</p>
+                `,
                 alertIOS: "要在 iPhone 上安裝：\n1. 點擊瀏覽器底部的「分享」圖示 (方格加向上箭頭)\n2. 選擇「加入主畫面」",
                 alertOther: "此瀏覽器可能不支援自動安裝，請參閱左側的安裝指南。",
                 alertMic: "需要麥克風權限才能進行錄音。"
@@ -558,10 +595,25 @@
                 setupSummary: "📲 安装及使用指南 ▼",
                 installBtn: "📥 安装 App",
                 whatIsSummary: "💡 什么是 Be Aware n' Be Around? ▼",
+                faqSummary: "❓ 常见问题 (FAQ) ▼",
                 setupT1: "如何安装至手机 (How to Install)",
-                setupL1: "<li><strong>iPhone (iOS):</strong> 使用 Safari 浏览器打开此网页，点击底部中央的「分享」图标，然后选择「添加到主屏幕」。</li><li><strong>Android:</strong> 使用 Chrome 浏览器打开，点击右上角「菜单」(三点)，然后选择「添加到主屏幕」。</li>",
+                setupL1: "<li><strong>iPhone (iOS):</strong> 使用 Safari 浏览器打开此网页，点击底部中央的「分享」图标，然后选择「添加到主屏幕」。</li><li><strong>Android:</strong> 使用 Chrome 浏览器打开，点击右上角「菜单」(三点), 然后选择「添加到主屏幕」。</li>",
                 setupT2: "如何操作 (How to Operate)",
-                setupL2: "<li><strong>教育模式:</strong> 为默认模式。点击颜色按键，手机会播放该步骤的急救指示。</li><li><strong>玩具模式:</strong> 点击「录音模式：关闭」将其开启。点击任何颜色按键录制声音（最长60秒），再次点击停止。关闭后点击按键即可播放。</li>",
+                setupL2: "<li><strong>教育模式:</strong> 为默认模式。点击颜色按键，手机会播放该步骤的急救指示。</li><li><strong>玩具模式:</strong> 点击「录音模式：关闭」将其开启。点击任何颜色按键录制声音（最长60秒）, 再次点击停止。关闭后点击按键即可播放。</li>",
+                faqContentHtml: `
+                    <h5>Q1: 为什么教育模式没有声音，或普通话语音无法正常发音？</h5>
+                    <p><strong>A:</strong> 本应用程序使用手机内置的语音引擎 (Text-to-Speech)。若语音无法发声或未按预期读出普通话，请依照下列手机设置检查：</p>
+                    <ul>
+                        <li><strong>iPhone (iOS):</strong> 请前往“设置”>“辅助功能”>“朗读内容”>“语音”，下载对应的普通话语音包。同时请确保手机侧边的“静音开关”已关闭并调高媒体音量。</li>
+                        <li><strong>Android:</strong> 请前往“设置”>“系统”/“辅助功能”>“文字转语音 (Text-to-Speech) 输出”，进入偏好引擎设置下载并安装“中文 (中国)”语音数据。</li>
+                    </ul>
+                    <h5>Q2: 玩具模式录音失败或无法播放怎么办？</h5>
+                    <p><strong>A:</strong> 录音功能需要手机麦克风权限。若无法录音，请检查浏览器权限设置，允许此网页访问麦克风。此外，请确保您的手机未处于静音模式。</p>
+                    <h5>Q3: 如何确保离线时也能顺畅使用此应用程序？</h5>
+                    <p><strong>A:</strong> 建议您点击上方的“📥 安装 App”按钮（或依照安装指南将网页加入主屏幕），将其作为 PWA (渐进式网页应用程序) 下载安装，安装后即可享有类似原生 App 的流畅体验。</p>
+                    <h5>Q4: 为什么我的点击次数没有立即更新？</h5>
+                    <p><strong>A:</strong> 全球点击次数计数器目前会在本地设备暂存并模拟动态增长。当部署至正式官方服务器后，将会全面连接云端数据库以同步全球使用者的真实数据。</p>
+                `,
                 alertIOS: "要在 iPhone 上安装：\n1. 点击浏览器底部的「分享」图标 (方格加向上箭头)\n2. 选择「添加到主屏幕」",
                 alertOther: "此浏览器可能不支持自动安装，请参阅左侧的安装指南。",
                 alertMic: "需要麦克风权限才能进行录音。"
@@ -589,10 +641,25 @@
                 setupSummary: "📲 Setup & Guide ▼",
                 installBtn: "📥 Install App",
                 whatIsSummary: "💡 What is Be Aware n' Be Around? ▼",
+                faqSummary: "❓ Frequently Asked Questions (FAQ) ▼",
                 setupT1: "How to Install",
                 setupL1: "<li><strong>iPhone (iOS):</strong> Open this page in Safari, tap the 'Share' icon at the bottom, and select 'Add to Home Screen'.</li><li><strong>Android:</strong> Open in Chrome, tap the menu (three dots) top right, and select 'Add to Home screen'.</li>",
                 setupT2: "How to Operate",
                 setupL2: "<li><strong>Education Mode:</strong> Default. Tap a button to hear the clinical instruction for that step.</li><li><strong>Toy Mode:</strong> Toggle Record Mode ON. Tap any button to record your voice (max 60s), tap again to stop. Toggle OFF to play it back.</li>",
+                faqContentHtml: `
+                    <h5>Q1: Why is there no sound in Education Mode or why is text-to-speech not working?</h5>
+                    <p><strong>A:</strong> This app uses your phone's built-in Text-to-Speech engine. If speech is silent, please check your device settings:</p>
+                    <ul>
+                        <li><strong>iPhone (iOS):</strong> Go to Settings > Accessibility > Spoken Content > Voices, and download the required language pack. Ensure your phone's physical silent switch is off and media volume is turned up.</li>
+                        <li><strong>Android:</strong> Go to Settings > System / Accessibility > Text-to-Speech output, and download the corresponding Chinese or English voice data package.</li>
+                    </ul>
+                    <h5>Q2: What should I do if voice recording fails in Toy Mode?</h5>
+                    <p><strong>A:</strong> Voice recording requires microphone permissions. Ensure your browser is allowed to access the microphone, and that your device is not muted.</p>
+                    <h5>Q3: Can I use this application offline?</h5>
+                    <p><strong>A:</strong> Yes! Tap the "📥 Install App" button or follow the setup guide to add the app to your home screen as a PWA, enabling seamless offline access.</p>
+                    <h5>Q4: How does the global click counter work?</h5>
+                    <p><strong>A:</strong> The global counter simulates local interactions for demonstration purposes and will sync with a live cloud database once deployed on the official production server.</p>
+                `,
                 alertIOS: "To install on iPhone:\n1. Tap the Share icon at the bottom\n2. Select 'Add to Home Screen'",
                 alertOther: "Automatic install not supported in this browser. Please see the setup guide.",
                 alertMic: "Microphone permission required."
@@ -604,7 +671,7 @@
                 1: "守。保持鎮定，記錄抽搐開始及持續的時間。",
                 2: "望。觀察並保護患者。移開附近危險物品，用軟物墊著患者頭部。",
                 3: "相。將患者輕輕翻側，保持呼吸道暢通。切勿強行將任何物品塞入患者口中。",
-                4: "助。尋求協助。陪伴患者直至清醒，若超過五分鐘請召喚救護車。"
+                4: "助. 尋求協助。陪伴患者直至清醒，若超過五分鐘請召喚救護車。"
             },
             'zh-CN': {
                 1: "守。保持镇定，记录抽搐开始及持续的时间。",
@@ -663,6 +730,9 @@
             
             document.getElementById('btnInstallApp').innerText = t.installBtn;
             document.getElementById('textWhatIsSummary').innerText = t.whatIsSummary;
+            
+            document.getElementById('textFaqSummary').innerText = t.faqSummary;
+            document.getElementById('faqContent').innerHTML = t.faqContentHtml;
 
             if (currentMode === 'edu') {
                 setStatus(t.statusEdu);
@@ -810,10 +880,9 @@
             const content = eduContent[currentLang][id];
             const utterance = new SpeechSynthesisUtterance(content);
             
-            // Explicitly force TTS engine language accents 
             if (currentLang === 'en') utterance.lang = 'en-US';
-            else if (currentLang === 'zh-CN') utterance.lang = 'zh-CN'; // Triggers Mandarin/Putonghua voice
-            else utterance.lang = 'zh-HK'; // Triggers Cantonese voice
+            else if (currentLang === 'zh-CN') utterance.lang = 'zh-CN'; 
+            else utterance.lang = 'zh-HK'; 
             
             window.speechSynthesis.speak(utterance);
             
