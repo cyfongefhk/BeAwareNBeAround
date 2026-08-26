@@ -11,6 +11,7 @@
             --orange: #f57c00;
             --yellow: #fbc02d;
             --primary-brand: #f57c00; 
+            --dark-orange: #e65100;
             --bg: #fff9f5;
             --text: #333;
         }
@@ -57,7 +58,7 @@
 
         /* Header & Logo */
         .header {
-            margin-top: 35px; /* Spacing for the absolute language selector */
+            margin-top: 35px;
             margin-bottom: 15px;
             width: 100%;
             max-width: 400px;
@@ -67,7 +68,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
         .app-logo {
             width: 100%;
@@ -75,26 +76,52 @@
             height: auto;
             margin-bottom: 8px;
         }
+        .fallback-logo {
+            display: none;
+            background-color: var(--primary-brand);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            margin: 0 auto 10px auto;
+        }
         .org-name {
             font-weight: bold;
             color: var(--text);
             white-space: nowrap;
-            /* Responsive font scaling to ensure it fits on one line */
             font-size: clamp(10px, 3.2vw, 14px); 
             letter-spacing: 0.5px;
         }
+        
+        /* Typography adjustments */
+        .slogan-chars {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--dark-orange);
+            margin: 10px 0 5px 0;
+            letter-spacing: 2px;
+        }
         .theme-title {
             color: var(--primary-brand);
-            margin: 5px 0;
+            margin: 0 0 10px 0;
             font-size: 24px;
         }
-        .subtitle {
-            font-size: 16px;
-            color: #555;
-            margin-top: 0;
+        .subtitle-box {
             margin-bottom: 15px;
+        }
+        .subtitle-primary {
+            font-size: 18px;
+            font-weight: bold;
+            color: #222;
+            margin-bottom: 4px;
+        }
+        .subtitle-secondary {
+            font-size: 14px;
+            color: #666;
             font-weight: normal;
         }
+
         .counter-box {
             background-color: #e0e0e0;
             padding: 8px 15px;
@@ -363,14 +390,22 @@
 
     <div class="header">
         <div class="logo-container">
-            <img src="image_4.png" alt="Epilepsy Foundation of Hong Kong" class="app-logo">
+            <img src="image_4.png" alt="Epilepsy Foundation of Hong Kong" class="app-logo" 
+                 onerror="this.style.display='none'; document.getElementById('fallbackLogo').style.display='inline-block';">
+            <div id="fallbackLogo" class="fallback-logo">
+                香港腦癇基金會<br>EPILEPSY FOUNDATION<br>OF HONG KONG
+            </div>
             <div class="org-name">香港腦癇基金會 Epilepsy Foundation of Hong Kong</div>
         </div>
+        
+        <div id="textSloganChars" class="slogan-chars">守, 望, 相, 助</div>
         <h2 class="theme-title">Be Aware n' Be Around</h2>
-        <div id="textSubtitle" class="subtitle">
-            處理急性腦癇發作的口訣<br>
-            <small>(How to manage a patient with acute seizure)</small>
+        
+        <div class="subtitle-box">
+            <div id="textSubtitle1" class="subtitle-primary">處理急性腦癇發作的口訣</div>
+            <div id="textSubtitle2" class="subtitle-secondary">Acute Seizure Management Slogan</div>
         </div>
+        
         <div class="counter-box">
             <span id="textClicks">全球點擊次數 (Global Clicks):</span> <span id="globalCounter">12,543</span>
         </div>
@@ -415,7 +450,7 @@
     <div class="install-row">
         <details class="setup-guide">
             <summary id="textSetupSummary">📲 安裝及使用指南 ▼</summary>
-            <div class="content" id="textSetupContent">
+            <div class="content">
                 <h5 id="setupTitle1">如何安裝至手機 (How to Install)</h5>
                 <ul id="setupList1">
                     <li><strong>iPhone (iOS):</strong> 使用 Safari 瀏覽器開啟此網頁，點擊底部中央的「分享」圖示，然後選擇「加入主畫面」。</li>
@@ -469,7 +504,9 @@
         
         const i18n = {
             'zh-HK': {
-                subtitle: "處理急性腦癇發作的口訣<br><small>(How to manage a patient with acute seizure)</small>",
+                sloganChars: "守, 望, 相, 助",
+                sub1: "處理急性腦癇發作的口訣",
+                sub2: "Acute Seizure Management Slogan",
                 clicks: "全球點擊次數 (Global Clicks):",
                 modeLabel: "應用模式：",
                 modeEdu: "教育模式",
@@ -498,7 +535,9 @@
                 alertMic: "需要麥克風權限才能進行錄音。"
             },
             'zh-CN': {
-                subtitle: "处理急性脑痫发作的口诀<br><small>(How to manage a patient with acute seizure)</small>",
+                sloganChars: "守, 望, 相, 助",
+                sub1: "处理急性脑痫发作的口诀",
+                sub2: "Acute Seizure Management Slogan",
                 clicks: "全球点击次数 (Global Clicks):",
                 modeLabel: "应用模式：",
                 modeEdu: "教育模式",
@@ -527,7 +566,9 @@
                 alertMic: "需要麦克风权限才能进行录音。"
             },
             'en': {
-                subtitle: "Acute Seizure Management Slogan<br><small>(處理急性腦癇發作的口訣)</small>",
+                sloganChars: "STAY, SAFE, SIDE, HELP",
+                sub1: "Acute Seizure Management Slogan",
+                sub2: "處理急性腦癇發作的口訣",
                 clicks: "Global Clicks:",
                 modeLabel: "App Mode:",
                 modeEdu: "Education Mode",
@@ -586,7 +627,9 @@
             document.getElementById('btnLangEn').classList.toggle('active', lang === 'en');
 
             const t = i18n[lang];
-            document.getElementById('textSubtitle').innerHTML = t.subtitle;
+            document.getElementById('textSloganChars').innerText = t.sloganChars;
+            document.getElementById('textSubtitle1').innerText = t.sub1;
+            document.getElementById('textSubtitle2').innerText = t.sub2;
             document.getElementById('textClicks').innerText = t.clicks;
             document.getElementById('textModeLabel').innerText = t.modeLabel;
             document.getElementById('optEdu').innerText = t.modeEdu;
