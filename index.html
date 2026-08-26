@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Epilepsy Foundation HK - Be Aware n' Be Around</title>
     
-    <!-- PWA Manifest Placeholder (Required for full Install App functionality) -->
+    <!-- PWA Manifest Placeholder -->
     <!-- <link rel="manifest" href="manifest.json"> -->
 
     <style>
@@ -28,10 +28,42 @@
             margin: 0;
             text-align: center;
         }
+
+        /* Language Toggle Switch */
+        .lang-selector {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 2px;
+            background: #e0e0e0;
+            padding: 4px;
+            border-radius: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+        .lang-btn {
+            border: none;
+            background: transparent;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 6px 12px;
+            border-radius: 16px;
+            cursor: pointer;
+            color: #666;
+            transition: 0.2s;
+        }
+        .lang-btn.active {
+            background: var(--primary-brand);
+            color: white;
+        }
+
         .header {
+            margin-top: 25px; /* Spacing for the absolute language selector */
             margin-bottom: 15px;
             width: 100%;
             max-width: 400px;
+            position: relative;
         }
         .logo-container {
             margin-bottom: 10px;
@@ -74,27 +106,6 @@
             margin-bottom: 15px;
         }
         
-        /* New Install App Button Styling */
-        .install-btn {
-            display: block;
-            margin: 0 auto 20px auto;
-            background-color: #43E660; 
-            color: #111;
-            padding: 10px 25px;
-            border-radius: 25px;
-            border: none;
-            font-size: 16px;
-            font-weight: bold;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            cursor: pointer;
-            transition: transform 0.2s;
-            width: 100%;
-            max-width: 250px;
-        }
-        .install-btn:active {
-            transform: scale(0.96);
-        }
-
         .controls {
             margin-bottom: 15px;
             padding: 15px;
@@ -135,6 +146,7 @@
             border-color: #d32f2f;
             font-weight: bold;
         }
+
         .grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -165,7 +177,6 @@
             transform: translateY(8px);
             box-shadow: 0 0 0 rgba(0,0,0,0.15);
         }
-        
         .btn-top-left, .btn-top-right { background-color: var(--red); }
         .btn-bottom-left { background-color: var(--orange); }
         .btn-bottom-right { background-color: var(--yellow); }
@@ -214,60 +225,6 @@
             height: 24px;
         }
 
-        .audio-player {
-            width: 100%;
-            max-width: 320px;
-            background: white;
-            padding: 15px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            margin-top: 15px;
-            border: 2px solid var(--primary-brand);
-            box-sizing: border-box;
-            display: none; 
-        }
-        .player-status {
-            font-size: 14px;
-            font-weight: bold;
-            color: var(--primary-brand);
-            margin-bottom: 10px;
-            text-align: left;
-        }
-        .player-controls {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .progress-bar {
-            flex-grow: 1;
-            accent-color: var(--primary-brand);
-            height: 6px;
-        }
-        .ctrl-btn {
-            background: none;
-            border: none;
-            font-size: 20px;
-            cursor: pointer;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .text-btn {
-            font-size: 12px;
-            font-weight: bold;
-            color: var(--primary-brand);
-            background: #ffe0b2;
-            padding: 4px 8px;
-            border-radius: 4px;
-        }
-        .speed-select {
-            font-size: 12px;
-            padding: 4px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
         .instruction-box {
             margin-top: 25px;
             background: white;
@@ -284,11 +241,20 @@
         .instruction-box h4 { margin: 0 0 10px 0; color: var(--primary-brand); text-align: center; }
         .instruction-box p { margin: 5px 0; }
         
-        .setup-guide {
-            margin-top: 20px;
-            margin-bottom: 20px;
+        /* Flex row for Guide and Install App button */
+        .install-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
             width: 100%;
             max-width: 350px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+        .setup-guide {
+            flex: 1;
+            margin: 0;
             background: #fff;
             border-radius: 8px;
             border: 1px solid #ccc;
@@ -297,11 +263,12 @@
         }
         .setup-guide summary {
             background-color: #eeeeee;
-            padding: 15px;
+            padding: 15px 10px;
             font-weight: bold;
             cursor: pointer;
             list-style: none;
             outline: none;
+            font-size: 13px;
         }
         .setup-guide summary::-webkit-details-marker { display: none; }
         .setup-guide .content {
@@ -309,9 +276,62 @@
             text-align: left;
             font-size: 13px;
             line-height: 1.6;
+            border-top: 1px solid #ccc;
         }
         .setup-guide h5 { margin: 10px 0 5px 0; color: var(--primary-brand); font-size: 14px; }
         .setup-guide ul { margin: 0; padding-left: 20px; }
+
+        .install-btn-small {
+            background-color: #43E660; 
+            color: #111;
+            padding: 0 15px;
+            height: 48px; /* Matches the summary height roughly */
+            border-radius: 8px;
+            border: none;
+            font-size: 14px;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.2s;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .install-btn-small:active { transform: scale(0.94); }
+
+        /* What is Be Aware Section */
+        .what-is-guide {
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 350px;
+            background: #fff;
+            border-radius: 8px;
+            border: 2px solid var(--primary-brand);
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+        .what-is-guide summary {
+            background-color: #ffe0b2;
+            color: var(--dark-orange);
+            padding: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            list-style: none;
+            outline: none;
+            text-align: center;
+            font-size: 14px;
+        }
+        .what-is-guide summary::-webkit-details-marker { display: none; }
+        .what-is-guide .content {
+            padding: 15px;
+            text-align: left;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        .what-is-guide h5 { margin: 15px 0 5px 0; color: var(--primary-brand); font-size: 14px; }
+        .what-is-guide p { margin: 5px 0; font-style: italic; color: #555;}
+        .what-is-guide ul { margin: 0; padding-left: 20px; }
 
         .footer-linktree {
             margin-top: 10px;
@@ -331,12 +351,16 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             transition: transform 0.2s;
         }
-        .linktree-btn:active {
-            transform: scale(0.98);
-        }
+        .linktree-btn:active { transform: scale(0.98); }
     </style>
 </head>
 <body>
+
+    <!-- Language Selector -->
+    <div class="lang-selector">
+        <button id="btnLangZh" class="lang-btn active" onclick="setLanguage('zh')">中文</button>
+        <button id="btnLangEn" class="lang-btn" onclick="setLanguage('en')">EN</button>
+    </div>
 
     <div class="header">
         <div class="logo-container">
@@ -347,34 +371,31 @@
             </div>
         </div>
         <h2 class="theme-title">Be Aware n' Be Around</h2>
-        <div class="subtitle">
+        <div id="textSubtitle" class="subtitle">
             處理急性腦癇發作的口訣<br>
             <small>(How to manage a patient with acute seizure)</small>
         </div>
         <div class="counter-box">
-            全球點擊次數 (Global Clicks): <span id="globalCounter">12,543</span>
+            <span id="textClicks">全球點擊次數 (Global Clicks):</span> <span id="globalCounter">12,543</span>
         </div>
-        
-        <!-- App Install Button -->
-        <button id="btnInstallApp" class="install-btn">📲 安裝應用程式 (Install App)</button>
     </div>
 
     <div class="controls">
         <div class="toggle-group">
-            <label for="modeSelect">應用模式：</label>
+            <label for="modeSelect" id="textModeLabel">應用模式：</label>
             <select id="modeSelect">
-                <option value="edu" selected>教育模式</option>
-                <option value="toy">玩具模式 (錄音/播放)</option>
+                <option value="edu" id="optEdu" selected>教育模式</option>
+                <option value="toy" id="optToy">玩具模式 (錄音/播放)</option>
             </select>
         </div>
         <button id="recordToggle" class="record-toggle" style="display: none;">錄音模式：關閉</button>
     </div>
 
     <div class="grid">
-        <button class="btn-toy btn-top-left" data-id="1">守</button>
-        <button class="btn-toy btn-top-right" data-id="2">望</button>
-        <button class="btn-toy btn-bottom-left" data-id="3">相</button>
-        <button class="btn-toy btn-bottom-right" data-id="4">助</button>
+        <button class="btn-toy btn-top-left" id="btn1" data-id="1">守</button>
+        <button class="btn-toy btn-top-right" id="btn2" data-id="2">望</button>
+        <button class="btn-toy btn-bottom-left" id="btn3" data-id="3">相</button>
+        <button class="btn-toy btn-bottom-right" id="btn4" data-id="4">助</button>
     </div>
 
     <div id="status">教育模式：請點擊按鍵聆聽指示。</div>
@@ -387,42 +408,55 @@
                 allowfullscreen></iframe>
     </div>
 
-    <div id="audioPlayerUI" class="audio-player">
-        <div class="player-status" id="playerStatus">正在播放 (Playing)</div>
-        <div class="player-controls">
-            <button id="btnPlayPause" class="ctrl-btn">⏸️</button>
-            <input type="range" id="progressBar" class="progress-bar" min="0" max="100" value="0">
-            <button id="btnForward10" class="ctrl-btn text-btn">+10s</button>
-            <select id="playbackSpeed" class="speed-select">
-                <option value="1">1.0x</option>
-                <option value="1.25">1.25x</option>
-                <option value="1.5">1.5x</option>
-                <option value="1.75">1.75x</option>
-                <option value="2">2.0x</option>
-            </select>
-        </div>
-    </div>
-
     <div class="instruction-box">
-        <h4>守望相助 急救指南</h4>
-        <p><strong>守 (Stay calm):</strong> 保持鎮定，記錄抽搐開始及持續的時間。</p>
-        <p><strong>望 (Observe):</strong> 觀察並保護患者。移開附近危險物品，用軟物墊著患者頭部。</p>
-        <p><strong>相 (Recovery position):</strong> 將患者輕輕翻側，保持呼吸道暢通。</p>
-        <p><strong>助 (Seek help):</strong> 尋求協助。切勿強行將任何物品塞入患者口中。陪伴患者直至清醒，若超過五分鐘請召喚救護車。</p>
+        <h4 id="guideTitle">守望相助 急救指南</h4>
+        <p id="guide1"><strong>守 (Stay calm):</strong> 保持鎮定，記錄抽搐開始及持續的時間。</p>
+        <p id="guide2"><strong>望 (Observe):</strong> 觀察並保護患者。移開附近危險物品，用軟物墊著患者頭部。</p>
+        <p id="guide3"><strong>相 (Recovery position):</strong> 將患者輕輕翻側，保持呼吸道暢通。切勿強行將任何物品塞入患者口中。</p>
+        <p id="guide4"><strong>助 (Seek help):</strong> 尋求協助。陪伴患者直至清醒，若超過五分鐘請召喚救護車。</p>
     </div>
 
-    <details class="setup-guide">
-        <summary>📲 安裝及使用指南 (Setup & Guide) ▼</summary>
+    <!-- Small Install Button Next to Setup Guide -->
+    <div class="install-row">
+        <details class="setup-guide">
+            <summary id="textSetupSummary">📲 安裝及使用指南 ▼</summary>
+            <div class="content" id="textSetupContent">
+                <h5>如何安裝至手機 (How to Install)</h5>
+                <ul>
+                    <li><strong>iPhone (iOS):</strong> 使用 Safari 瀏覽器開啟此網頁，點擊底部中央的「分享」圖示，然後選擇「加入主畫面」。</li>
+                    <li><strong>Android:</strong> 使用 Chrome 瀏覽器開啟，點擊右上角「選單」(三點)，然後選擇「加到主畫面」。</li>
+                </ul>
+                <h5>如何操作 (How to Operate)</h5>
+                <ul>
+                    <li><strong>教育模式:</strong> 為預設模式。點擊顏色按鍵，手機會播放該步驟的急救指示。</li>
+                    <li><strong>玩具模式:</strong> 點擊「錄音模式：關閉」將其開啟。點擊任何顏色按鍵錄製聲音（最長60秒），再次點擊停止。關閉後點擊按鍵即可播放。</li>
+                </ul>
+            </div>
+        </details>
+        
+        <button id="btnInstallApp" class="install-btn-small">📥 安裝 App</button>
+    </div>
+
+    <!-- What is Be Aware Section -->
+    <details class="what-is-guide">
+        <summary id="textWhatIsSummary">💡 什麼是 Be Aware n' Be Around? ▼</summary>
         <div class="content">
-            <h5>如何安裝至手機 (How to Install)</h5>
+            <p>"Be Aware of the time. Be Around for the safe recovery."</p>
+            <p>"Be Aware: Don't restrain. Be Around: Protect and remain."</p>
+            <p>"Aware of what to do, Around when it matters most."</p>
+            
+            <h5>Be Aware (Mental Vigilance & Safety Knowledge)</h5>
             <ul>
-                <li><strong>iPhone (iOS):</strong> 使用 Safari 瀏覽器開啟此網頁，點擊底部中央的「分享」圖示，然後選擇「加入主畫面」。</li>
-                <li><strong>Android:</strong> 使用 Chrome 瀏覽器開啟，點擊右上角「選單」(三點)，然後選擇「加到主畫面」。</li>
+                <li><strong>Recognize & Time:</strong> Note when the seizure starts; tracking duration is critical (call emergency services if it exceeds 5 minutes).</li>
+                <li><strong>Know the "Don'ts":</strong> Stay mindful to never restrain movement and never place anything in the person's mouth.</li>
+                <li><strong>Assess Environment:</strong> Spot immediate physical hazards in the surroundings (sharp corners, water, stairs).</li>
             </ul>
-            <h5>如何操作 (How to Operate)</h5>
+
+            <h5>Be Around (Physical Protection & Care)</h5>
             <ul>
-                <li><strong>教育模式:</strong> 為預設模式。點擊顏色按鍵，手機會播放該步驟的急救指示。</li>
-                <li><strong>玩具模式:</strong> 點擊「錄音模式：關閉」將其開啟。點擊任何顏色按鍵錄製自己的聲音（最長60秒），再次點擊停止。關閉錄音模式後，點擊按鍵即可播放，並支援進度條及倍速播放。</li>
+                <li><strong>Secure the Surroundings:</strong> Clear hard or sharp objects and place something soft under their head.</li>
+                <li><strong>Position safely:</strong> Turn the person gently onto their side (recovery position) once jerking stops to keep their airway clear.</li>
+                <li><strong>Provide Post-Seizure Support:</strong> Stay by their side through the post-ictal confusion phase until they are fully alert, offering calm reassurance.</li>
             </ul>
         </div>
     </details>
@@ -436,11 +470,119 @@
     <audio id="globalAudioPlayer" playsinline></audio>
 
     <script>
+        // --- Multi-language (i18n) Setup ---
+        let currentLang = 'zh';
+        
+        const i18n = {
+            zh: {
+                subtitle: "處理急性腦癇發作的口訣<br><small>(How to manage a patient with acute seizure)</small>",
+                clicks: "全球點擊次數 (Global Clicks):",
+                modeLabel: "應用模式：",
+                modeEdu: "教育模式",
+                modeToy: "玩具模式 (錄音/播放)",
+                recordOff: "錄音模式：關閉",
+                recordOn: "🔴 錄音模式：開啟 (請點擊按鍵)",
+                btn1: "守", btn2: "望", btn3: "相", btn4: "助",
+                statusEdu: "教育模式：請點擊按鍵聆聽指示。",
+                statusToyReady: "玩具模式：準備就緒。",
+                statusRecordReady: "準備錄音。",
+                statusPlayMode: "播放模式：開啟。",
+                guideTitle: "守望相助 急救指南",
+                guide1: "<strong>守 (Stay calm):</strong> 保持鎮定，記錄抽搐開始及持續的時間。",
+                guide2: "<strong>望 (Observe):</strong> 觀察並保護患者。移開附近危險物品，用軟物墊著患者頭部。",
+                guide3: "<strong>相 (Recovery position):</strong> 將患者輕輕翻側，保持呼吸道暢通。切勿強行將任何物品塞入患者口中。",
+                guide4: "<strong>助 (Seek help):</strong> 尋求協助。陪伴患者直至清醒，若超過五分鐘請召喚救護車。",
+                setupSummary: "📲 安裝及使用指南 ▼",
+                installBtn: "📥 安裝 App",
+                whatIsSummary: "💡 什麼是 Be Aware n' Be Around? ▼"
+            },
+            en: {
+                subtitle: "Acute Seizure Management Slogan<br><small>(處理急性腦癇發作的口訣)</small>",
+                clicks: "Global Clicks:",
+                modeLabel: "App Mode:",
+                modeEdu: "Education Mode",
+                modeToy: "Toy Mode (Record/Play)",
+                recordOff: "Record Mode: OFF",
+                recordOn: "🔴 Record Mode: ON (Click a button)",
+                btn1: "STAY", btn2: "SAFE", btn3: "SIDE", btn4: "HELP", 
+                statusEdu: "Education Mode: Click buttons for instructions.",
+                statusToyReady: "Toy Mode: Ready.",
+                statusRecordReady: "Ready to record.",
+                statusPlayMode: "Playback mode active.",
+                guideTitle: "Seizure First Aid Guide",
+                guide1: "<strong>STAY:</strong> Stay calm and time the seizure.",
+                guide2: "<strong>SAFE:</strong> Observe and keep the person safe. Clear hard objects and cushion their head.",
+                guide3: "<strong>SIDE:</strong> Gently roll the person onto their side. Never put anything in their mouth.",
+                guide4: "<strong>HELP:</strong> Seek help. Stay with them until fully conscious, and call an ambulance if over 5 minutes.",
+                setupSummary: "📲 Setup & Guide ▼",
+                installBtn: "📥 Install App",
+                whatIsSummary: "💡 What is Be Aware n' Be Around? ▼"
+            }
+        };
+
+        const eduContentZh = {
+            1: "守。保持鎮定，記錄抽搐開始及持續的時間。",
+            2: "望。觀察並保護患者。移開附近危險物品，用軟物墊著患者頭部。",
+            3: "相。將患者輕輕翻側，保持呼吸道暢通。切勿強行將任何物品塞入患者口中。",
+            4: "助。尋求協助。陪伴患者直至清醒，若超過五分鐘請召喚救護車。"
+        };
+        const eduContentEn = {
+            1: "STAY. Stay calm and time the seizure.",
+            2: "SAFE. Observe and keep the person safe. Clear hard objects and cushion their head.",
+            3: "SIDE. Gently roll the person onto their side. Never put anything in their mouth.",
+            4: "HELP. Seek help. Stay with them until fully conscious, and call an ambulance if it lasts over five minutes."
+        };
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            
+            // Toggle active styling
+            document.getElementById('btnLangZh').classList.toggle('active', lang === 'zh');
+            document.getElementById('btnLangEn').classList.toggle('active', lang === 'en');
+
+            // Apply translations
+            const t = i18n[lang];
+            document.getElementById('textSubtitle').innerHTML = t.subtitle;
+            document.getElementById('textClicks').innerText = t.clicks;
+            document.getElementById('textModeLabel').innerText = t.modeLabel;
+            document.getElementById('optEdu').innerText = t.modeEdu;
+            document.getElementById('optToy').innerText = t.modeToy;
+            
+            if (isRecordModeActive) {
+                document.getElementById('recordToggle').innerText = t.recordOn;
+            } else {
+                document.getElementById('recordToggle').innerText = t.recordOff;
+            }
+
+            // Update button texts and sizes
+            const fontScale = lang === 'en' ? '24px' : '32px';
+            document.getElementById('btn1').innerText = t.btn1;
+            document.getElementById('btn2').innerText = t.btn2;
+            document.getElementById('btn3').innerText = t.btn3;
+            document.getElementById('btn4').innerText = t.btn4;
+            document.querySelectorAll('.btn-toy').forEach(b => b.style.fontSize = fontScale);
+
+            document.getElementById('guideTitle').innerText = t.guideTitle;
+            document.getElementById('guide1').innerHTML = t.guide1;
+            document.getElementById('guide2').innerHTML = t.guide2;
+            document.getElementById('guide3').innerHTML = t.guide3;
+            document.getElementById('guide4').innerHTML = t.guide4;
+            
+            document.getElementById('textSetupSummary').innerText = t.setupSummary;
+            document.getElementById('btnInstallApp').innerText = t.installBtn;
+            document.getElementById('textWhatIsSummary').innerText = t.whatIsSummary;
+
+            // Reset Status Text
+            if (currentMode === 'edu') {
+                setStatus(t.statusEdu);
+            } else {
+                setStatus(isRecordModeActive ? t.statusRecordReady : t.statusToyReady);
+            }
+        }
+
         // --- App Install Logic ---
         let deferredPrompt;
         const btnInstallApp = document.getElementById('btnInstallApp');
-        
-        // Basic iOS Detection
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
         window.addEventListener('beforeinstallprompt', (e) => {
@@ -450,24 +592,23 @@
 
         btnInstallApp.addEventListener('click', async () => {
             if (isIOS) {
-                alert("要在 iPhone 上安裝：\n\n1. 點擊瀏覽器底部的「分享」圖示 (方格加向上箭頭)\n2. 選擇「加入主畫面」\n\nTo install on iPhone:\n1. Tap the Share icon at the bottom\n2. Select 'Add to Home Screen'");
+                alert(currentLang === 'zh' ? 
+                    "要在 iPhone 上安裝：\n1. 點擊瀏覽器底部的「分享」圖示 (方格加向上箭頭)\n2. 選擇「加入主畫面」" : 
+                    "To install on iPhone:\n1. Tap the Share icon at the bottom\n2. Select 'Add to Home Screen'");
                 return;
             }
-
             if (deferredPrompt) {
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') {
-                    console.log('User accepted the install prompt');
-                }
                 deferredPrompt = null;
             } else {
-                alert("此瀏覽器可能不支援自動安裝，或者應用程式已經安裝。請參閱下方的安裝指南。\n\nThis browser may not support automatic installation, or the app is already installed. Please refer to the setup guide below.");
+                alert(currentLang === 'zh' ? 
+                    "此瀏覽器可能不支援自動安裝，請參閱左側的安裝指南。" : 
+                    "Automatic install not supported in this browser. Please see the setup guide.");
             }
         });
-        // --- End App Install Logic ---
 
-
+        // --- Core App Logic ---
         let currentMode = 'edu'; 
         let isRecordModeActive = false;
         let isRecording = false;
@@ -488,88 +629,25 @@
 
         const userAudio = { 1: null, 2: null, 3: null, 4: null };
         const globalAudioPlayer = document.getElementById('globalAudioPlayer');
-        const audioPlayerUI = document.getElementById('audioPlayerUI');
-        const playerStatus = document.getElementById('playerStatus');
-        const progressBar = document.getElementById('progressBar');
-        const btnPlayPause = document.getElementById('btnPlayPause');
-        const btnForward10 = document.getElementById('btnForward10');
-        const playbackSpeed = document.getElementById('playbackSpeed');
-        
-        const eduContent = {
-            1: "守。保持鎮定，記錄抽搐開始及持續的時間。",
-            2: "望。觀察並保護患者。移開附近危險物品，用軟物墊著患者頭部。",
-            3: "相。將患者輕輕翻側，保持呼吸道暢通。",
-            4: "助。尋求協助。切勿強行將任何物品塞入患者口中。陪伴患者直至清醒，若抽搐超過五分鐘請召喚救護車。"
-        };
-
         const modeSelect = document.getElementById('modeSelect');
         const recordToggle = document.getElementById('recordToggle');
         const statusDiv = document.getElementById('status');
         const buttons = document.querySelectorAll('.btn-toy');
 
-        globalAudioPlayer.addEventListener('timeupdate', () => {
-            if(globalAudioPlayer.duration) {
-                const progress = (globalAudioPlayer.currentTime / globalAudioPlayer.duration) * 100;
-                progressBar.value = progress;
-            }
-        });
-
-        globalAudioPlayer.addEventListener('ended', () => {
-            btnPlayPause.innerText = '▶️';
-            progressBar.value = 0;
-            setTimeout(() => { audioPlayerUI.style.display = 'none'; }, 1500);
-        });
-
-        progressBar.addEventListener('input', (e) => {
-            if(globalAudioPlayer.duration) {
-                const scrubTime = (e.target.value / 100) * globalAudioPlayer.duration;
-                globalAudioPlayer.currentTime = scrubTime;
-            }
-        });
-
-        btnForward10.addEventListener('click', () => {
-            if(globalAudioPlayer.duration) {
-                globalAudioPlayer.currentTime = Math.min(globalAudioPlayer.currentTime + 10, globalAudioPlayer.duration);
-            }
-        });
-
-        playbackSpeed.addEventListener('change', (e) => {
-            globalAudioPlayer.playbackRate = parseFloat(e.target.value);
-        });
-
-        btnPlayPause.addEventListener('click', () => {
-            if(globalAudioPlayer.paused) {
-                globalAudioPlayer.play();
-                btnPlayPause.innerText = '⏸️';
-            } else {
-                globalAudioPlayer.pause();
-                btnPlayPause.innerText = '▶️';
-            }
-        });
-
-        function showAudioUI(id) {
-            audioPlayerUI.style.display = 'block';
-            playerStatus.innerText = `正在播放錄音按鍵 ${id} (Playing Button ${id})`;
-            btnPlayPause.innerText = '⏸️';
-            playbackSpeed.value = "1";
-            globalAudioPlayer.playbackRate = 1;
-            progressBar.value = 0;
-        }
-
         modeSelect.addEventListener('change', (e) => {
             currentMode = e.target.value;
-            audioPlayerUI.style.display = 'none';
             window.speechSynthesis.cancel();
             globalAudioPlayer.pause();
+            
             if (currentMode === 'edu') {
                 recordToggle.style.display = 'none';
                 isRecordModeActive = false;
                 recordToggle.classList.remove('active');
-                recordToggle.innerText = "錄音模式：關閉";
-                setStatus("教育模式：請點擊按鍵聆聽指示。");
+                recordToggle.innerText = i18n[currentLang].recordOff;
+                setStatus(i18n[currentLang].statusEdu);
             } else {
                 recordToggle.style.display = 'block';
-                setStatus("玩具模式：準備就緒。");
+                setStatus(i18n[currentLang].statusToyReady);
             }
         });
 
@@ -580,20 +658,18 @@
                     setupMediaRecorder(stream);
                     isRecordModeActive = true;
                     recordToggle.classList.add('active');
-                    recordToggle.innerText = "🔴 錄音模式：開啟 (請點擊按鍵)";
-                    setStatus("準備錄音。");
-                    audioPlayerUI.style.display = 'none';
+                    recordToggle.innerText = i18n[currentLang].recordOn;
+                    setStatus(i18n[currentLang].statusRecordReady);
                     globalAudioPlayer.pause();
                 } catch (err) {
-                    alert("需要麥克風權限才能進行錄音。");
-                    console.error(err);
+                    alert(currentLang === 'zh' ? "需要麥克風權限才能進行錄音。" : "Microphone permission required.");
                 }
             } else {
                 isRecordModeActive = false;
                 recordToggle.classList.remove('active');
-                recordToggle.innerText = "錄音模式：關閉";
+                recordToggle.innerText = i18n[currentLang].recordOff;
                 if(isRecording) stopRecording(currentRecordingId);
-                setStatus("播放模式：開啟。");
+                setStatus(i18n[currentLang].statusPlayMode);
             }
         });
 
@@ -610,9 +686,7 @@
             mediaRecorder = new MediaRecorder(stream, options);
             
             mediaRecorder.ondataavailable = event => {
-                if (event.data.size > 0) {
-                    audioChunks.push(event.data);
-                }
+                if (event.data.size > 0) audioChunks.push(event.data);
             };
 
             mediaRecorder.onstop = () => {
@@ -620,9 +694,8 @@
                 const audioUrl = URL.createObjectURL(audioBlob);
                 userAudio[currentRecordingId] = audioUrl;
                 audioChunks = [];
-                setStatus(`已儲存至按鍵 ${currentRecordingId}。`);
+                setStatus(currentLang === 'zh' ? `已儲存至按鍵 ${currentRecordingId}。` : `Saved to button ${currentRecordingId}.`);
                 isRecording = false;
-                
                 document.querySelector(`[data-id="${currentRecordingId}"]`).classList.remove('recording-pulse');
             };
         }
@@ -633,7 +706,6 @@
                 incrementCounter(); 
 
                 if (currentMode === 'edu') {
-                    audioPlayerUI.style.display = 'none'; 
                     playEducationTTS(id);
                 } else if (currentMode === 'toy') {
                     if (isRecordModeActive) {
@@ -649,10 +721,12 @@
             globalAudioPlayer.pause(); 
             window.speechSynthesis.cancel();
             
-            const utterance = new SpeechSynthesisUtterance(eduContent[id]);
-            utterance.lang = 'zh-HK'; 
+            const content = currentLang === 'en' ? eduContentEn[id] : eduContentZh[id];
+            const utterance = new SpeechSynthesisUtterance(content);
+            utterance.lang = currentLang === 'en' ? 'en-US' : 'zh-HK'; 
             window.speechSynthesis.speak(utterance);
-            setStatus(`播放教育步驟 ${id}...`);
+            
+            setStatus(currentLang === 'zh' ? `播放教育步驟 ${id}...` : `Playing education step ${id}...`);
         }
 
         function handleRecording(id, btnElement) {
@@ -665,16 +739,17 @@
                 isRecording = true;
                 
                 btnElement.classList.add('recording-pulse');
-                statusDiv.innerHTML = `<span style="color:#d32f2f; font-weight:bold;">🔴 正在按鍵 ${id} 錄音... (最長60秒)</span>`;
+                const recMsg = currentLang === 'en' ? `🔴 Recording on button ${id}... (Max 60s)` : `🔴 正在按鍵 ${id} 錄音... (最長60秒)`;
+                statusDiv.innerHTML = `<span style="color:#d32f2f; font-weight:bold;">${recMsg}</span>`;
                 
                 recordingTimeout = setTimeout(() => {
                     if (mediaRecorder.state === "recording") {
                         stopRecording(id);
-                        setStatus(`已達時間上限。已儲存至按鍵 ${id}。`);
+                        setStatus(currentLang === 'zh' ? `已達時間上限。已儲存至按鍵 ${id}。` : `Time limit reached. Saved to button ${id}.`);
                     }
                 }, 60000);
             } else {
-                setStatus("請先停止目前的錄音！");
+                setStatus(currentLang === 'zh' ? "請先停止目前的錄音！" : "Please stop the current recording first!");
             }
         }
 
@@ -688,18 +763,13 @@
             if (userAudio[id]) {
                 window.speechSynthesis.cancel(); 
                 globalAudioPlayer.src = userAudio[id];
-                showAudioUI(id);
-                
                 globalAudioPlayer.play().then(() => {
-                    setStatus(`播放按鍵 ${id}...`);
+                    setStatus(currentLang === 'zh' ? `播放按鍵 ${id}...` : `Playing button ${id}...`);
                 }).catch(error => {
-                    console.error("Playback failed:", error);
-                    setStatus("播放失敗，請確保手機未靜音並調高音量。");
-                    audioPlayerUI.style.display = 'none';
+                    setStatus(currentLang === 'zh' ? "播放失敗，請確保手機未靜音。" : "Playback failed. Check volume.");
                 });
             } else {
-                setStatus("此按鍵尚未有錄音。");
-                audioPlayerUI.style.display = 'none';
+                setStatus(currentLang === 'zh' ? "此按鍵尚未有錄音。" : "No audio recorded yet.");
             }
         }
 
