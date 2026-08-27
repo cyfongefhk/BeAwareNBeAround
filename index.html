@@ -72,7 +72,7 @@
         }
         .app-logo {
             width: 100%;
-            max-width: 110px;
+            max-width: 180px;
             height: auto;
             margin-bottom: 8px;
         }
@@ -85,13 +85,6 @@
             font-size: 14px;
             font-weight: bold;
             margin: 0 auto 10px auto;
-        }
-        .org-name {
-            font-weight: bold;
-            color: var(--text);
-            white-space: nowrap;
-            font-size: clamp(10px, 3.2vw, 14px); 
-            letter-spacing: 0.5px;
         }
         
         /* Typography adjustments */
@@ -381,7 +374,7 @@
 </head>
 <body>
 
-    <!-- 3-Language Selector -->
+    <!-- 3-Language Toggle Switch -->
     <div class="lang-selector">
         <button id="btnLangZhHK" class="lang-btn active" onclick="setLanguage('zh-HK')">繁體</button>
         <button id="btnLangZhCN" class="lang-btn" onclick="setLanguage('zh-CN')">简体</button>
@@ -390,12 +383,11 @@
 
     <div class="header">
         <div class="logo-container">
-            <img src="image_4.png" alt="Epilepsy Foundation of Hong Kong" class="app-logo" 
+            <img src="EFHK_Master_Color_Slogan-rsi4satda07cprpax5o5bohdfc82tt3eqr5o2xdgkw.webp" alt="Epilepsy Foundation of Hong Kong" class="app-logo" 
                  onerror="this.style.display='none'; document.getElementById('fallbackLogo').style.display='inline-block';">
             <div id="fallbackLogo" class="fallback-logo">
                 香港腦癇基金會<br>EPILEPSY FOUNDATION<br>OF HONG KONG
             </div>
-            <div class="org-name">香港腦癇基金會 Epilepsy Foundation of Hong Kong</div>
         </div>
         
         <div id="textSloganChars" class="slogan-chars">守、望、相、助</div>
@@ -467,7 +459,6 @@
         <button id="btnInstallApp" class="install-btn-small">📥 安裝 App</button>
     </div>
 
-    <!-- What is Be Aware Section -->
     <details class="what-is-guide">
         <summary id="textWhatIsSummary">💡 什麼是 Be Aware n' Be Around? ▼</summary>
         <div class="content">
@@ -491,15 +482,14 @@
         </div>
     </details>
 
-    <!-- Foldable FAQ Section -->
     <details class="faq-guide">
         <summary id="textFaqSummary">❓ 常見問題 (FAQ) ▼</summary>
         <div class="content" id="faqContent">
             <h5>Q1: 為什麼教育模式沒有聲音，或 Putonghua 語音無法正常發音？</h5>
-            <p><strong>A:</strong> 本應用程式使用手機內置的語音引擎 (Text-to-Speech)。若語音無法發聲或未按預期讀出普通話/廣東話，請依照下列手機設定檢查：</p>
+            <p><strong>A:</strong> 本應用程式使用手機內置的語音引擎 (Text-to-Speech)。若語音無法發聲或未按預期讀出普通話／廣東話，請依照下列手機設定檢查：</p>
             <ul>
                 <li><strong>iPhone (iOS):</strong> 請前往「設定」>「輔助使用」>「朗讀內容」>「語音」，下載對應的語言包（如普通話或廣東話）。同時請確保手機側邊的「靜音開關」已關閉並調高媒體音量。</li>
-                <li><strong>Android:</strong> 請前往「設定」>「系統」/「輔助使用」>「文字轉語音 (Text-to-Speech) 輸出」，進入偏好引擎設定下載並安裝「中文 (中國)」或「中文 (香港)」語音數據。</li>
+                <li><strong>Android:</strong> 請前往「設定」>「系統」／「輔助使用」>「文字轉語音 (Text-to-Speech) 輸出」，進入偏好引擎設定下載並安裝「中文 (中國)」或「中文 (香港)」語音數據。</li>
             </ul>
 
             <h5>Q2: 玩具模式錄音失敗或無法播放怎麼辦？</h5>
@@ -522,7 +512,6 @@
     <audio id="globalAudioPlayer" playsinline></audio>
 
     <script>
-        // --- 3-Language i18n Setup ---
         let currentLang = 'zh-HK';
         
         const i18n = {
@@ -556,10 +545,10 @@
                 setupL2: "<li><strong>教育模式:</strong> 為預設模式。點擊顏色按鍵，手機會播放該步驟的急救指示。</li><li><strong>玩具模式:</strong> 點擊「錄音模式：關閉」將其開啟。點擊任何顏色按鍵錄製聲音（最長60秒）, 再次點擊停止。關閉後點擊按鍵即可播放。</li>",
                 faqContentHtml: `
                     <h5>Q1: 為什麼教育模式沒有聲音，或 Putonghua 語音無法正常發音？</h5>
-                    <p><strong>A:</strong> 本應用程式使用手機內置的語音引擎 (Text-to-Speech)。若語音無法發聲或未按預期讀出普通話/廣東話，請依照下列手機設定檢查：</p>
+                    <p><strong>A:</strong> 本應用程式使用手機內置的語音引擎 (Text-to-Speech)。若語音無法發聲或未按預期讀出普通話／廣東話，請依照下列手機設定檢查：</p>
                     <ul>
                         <li><strong>iPhone (iOS):</strong> 請前往「設定」>「輔助使用」>「朗讀內容」>「語音」，下載對應的語言包（如普通話或廣東話）。同時請確保手機側邊的「靜音開關」已關閉並調高媒體音量。</li>
-                        <li><strong>Android:</strong> 請前往「設定」>「系統」/「輔助使用」>「文字轉語音 (Text-to-Speech) 輸出」，進入偏好引擎設定下載並安裝「中文 (中國)」或「中文 (香港)」語音數據。</li>
+                        <li><strong>Android:</strong> 請前往「設定」>「系統」／「輔助使用」>「文字轉語音 (Text-to-Speech) 輸出」，進入偏好引擎設定下載並安裝「中文 (中國)」或「中文 (香港)」語音數據。</li>
                     </ul>
                     <h5>Q2: 玩具模式錄音失敗或無法播放怎麼辦？</h5>
                     <p><strong>A:</strong> 錄音功能需要手機麥克風權限。若無法錄音，請檢查瀏覽器權限設定，允許此網頁存取麥克風。此外，請確保您的手機未處於靜音模式。</p>
@@ -605,7 +594,7 @@
                     <p><strong>A:</strong> 本应用程序使用手机内置的语音引擎 (Text-to-Speech)。若语音无法发声或未按预期读出普通话，请依照下列手机设置检查：</p>
                     <ul>
                         <li><strong>iPhone (iOS):</strong> 请前往“设置”>“辅助功能”>“朗读内容”>“语音”，下载对应的普通话语音包。同时请确保手机侧边的“静音开关”已关闭并调高媒体音量。</li>
-                        <li><strong>Android:</strong> 请前往“设置”>“系统”/“辅助功能”>“文字转语音 (Text-to-Speech) 输出”，进入偏好引擎设置下载并安装“中文 (中国)”语音数据。</li>
+                        <li><strong>Android:</strong> 请前往“设置”>“系统”／“辅助功能”>“文字转语音 (Text-to-Speech) 输出”，进入偏好引擎设置下载并安装“中文 (中国)”语音数据。</li>
                     </ul>
                     <h5>Q2: 玩具模式录音失败或无法播放怎么办？</h5>
                     <p><strong>A:</strong> 录音功能需要手机麦克风权限。若无法录音，请检查浏览器权限设置，允许此网页访问麦克风。此外，请确保您的手机未处于静音模式。</p>
@@ -671,7 +660,7 @@
                 1: "守。保持鎮定，記錄抽搐開始及持續的時間。",
                 2: "望。觀察並保護患者。移開附近危險物品，用軟物墊著患者頭部。",
                 3: "相。將患者輕輕翻側，保持呼吸道暢通。切勿強行將任何物品塞入患者口中。",
-                4: "助. 尋求協助。陪伴患者直至清醒，若超過五分鐘請召喚救護車。"
+                4: "助。尋求協助。陪伴患者直至清醒，若超過五分鐘請召喚救護車。"
             },
             'zh-CN': {
                 1: "守。保持镇定，记录抽搐开始及持续的时间。",
