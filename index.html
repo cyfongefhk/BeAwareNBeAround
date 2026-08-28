@@ -28,85 +28,105 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
+            padding: 20px 15px;
             margin: 0;
             text-align: center;
         }
 
-        /* 3-Language Toggle Switch */
-        .lang-selector {
-            position: absolute;
-            top: 15px;
-            right: 15px;
+        /* Top Bar: Logo, Org Name & Language Selector */
+        .top-bar {
             display: flex;
-            gap: 2px;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 100%;
+            max-width: 450px;
+            margin-bottom: 20px;
+            padding: 0 5px;
+            box-sizing: border-box;
+        }
+        .top-left-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1; 
+            padding-right: 15px; /* Ensures space between text and lang selector */
+        }
+        .logo-link {
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s;
+            flex-shrink: 0;
+        }
+        .logo-link:active {
+            transform: scale(0.95);
+        }
+        .app-logo {
+            width: 65px; /* Logo made much smaller */
+            height: auto;
+            display: block;
+        }
+        
+        /* 2-Line Orange Heading */
+        .org-name {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            justify-content: center;
+        }
+        .org-name-zh {
+            color: var(--primary-brand);
+            font-size: 19px;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 2px;
+        }
+        .org-name-en {
+            color: var(--primary-brand);
+            font-size: 11px;
+            font-weight: bold;
+            line-height: 1.2;
+        }
+
+        /* Vertical Language Selector */
+        .lang-selector {
+            display: flex;
+            flex-direction: column; /* Stacked vertically */
+            gap: 5px;
             background: #e0e0e0;
-            padding: 4px;
-            border-radius: 20px;
+            padding: 6px;
+            border-radius: 12px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            z-index: 100;
+            flex-shrink: 0;
         }
         .lang-btn {
             border: none;
             background: transparent;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: bold;
-            padding: 6px 10px;
-            border-radius: 16px;
+            padding: 8px 12px;
+            border-radius: 8px;
             cursor: pointer;
-            color: #666;
+            color: #555;
             transition: 0.2s;
+            text-align: center;
         }
         .lang-btn.active {
             background: var(--primary-brand);
             color: white;
         }
 
-        /* Header & Logo */
+        /* Header & Slogan */
         .header {
-            margin-top: 35px;
-            margin-bottom: 15px;
             width: 100%;
             max-width: 400px;
             position: relative;
-        }
-        .logo-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             margin-bottom: 15px;
         }
-        .logo-link {
-            text-decoration: none;
-            display: inline-block;
-            transition: transform 0.2s;
-        }
-        .logo-link:active {
-            transform: scale(0.95);
-        }
-        .app-logo {
-            width: 100%;
-            max-width: 180px;
-            height: auto;
-            margin-bottom: 8px;
-        }
-        .fallback-logo {
-            display: none;
-            background-color: var(--primary-brand);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 4px;
-            font-size: 14px;
-            font-weight: bold;
-            margin: 0 auto 10px auto;
-        }
-        
-        /* Typography adjustments */
         .slogan-chars {
             font-size: 22px;
             font-weight: 800;
             color: var(--dark-orange);
-            margin: 10px 0 5px 0;
+            margin: 0 0 5px 0;
             letter-spacing: 2px;
         }
         .theme-title {
@@ -388,24 +408,27 @@
 </head>
 <body>
 
-    <!-- 3-Language Toggle Switch -->
-    <div class="lang-selector">
-        <button id="btnLangZhHK" class="lang-btn active" onclick="setLanguage('zh-HK')">繁體</button>
-        <button id="btnLangZhCN" class="lang-btn" onclick="setLanguage('zh-CN')">简体</button>
-        <button id="btnLangEn" class="lang-btn" onclick="setLanguage('en')">EN</button>
-    </div>
-
-    <div class="header">
-        <div class="logo-container">
+    <!-- Top Bar: Logo, Name & Language Toggle -->
+    <div class="top-bar">
+        <div class="top-left-group">
             <a href="https://epilepsy.org.hk" target="_blank" rel="noopener noreferrer" class="logo-link">
-                <img src="https://epilepsy.org.hk/wp-content/uploads/elementor/thumbs/EFHK-abb-Logo-Ver-%E5%9C%93%E5%BA%95-rsi4tzw9b949vi84j6y5gkdzbj2s5xn3mit7czgz2g.png" alt="Epilepsy Foundation of Hong Kong" class="app-logo" 
-                     onerror="this.style.display='none'; document.getElementById('fallbackLogo').style.display='inline-block';">
-                <div id="fallbackLogo" class="fallback-logo">
-                    香港腦癇基金會<br>EPILEPSY FOUNDATION<br>OF HONG KONG
-                </div>
+                <img src="https://epilepsy.org.hk/wp-content/uploads/elementor/thumbs/EFHK-abb-Logo-Ver-%E5%9C%93%E5%BA%95-rsi4tzw9b949vi84j6y5gkdzbj2s5xn3mit7czgz2g.png" alt="Epilepsy Foundation of Hong Kong" class="app-logo">
             </a>
+            <div class="org-name">
+                <div class="org-name-zh" id="textOrgZh">香港腦癇基金會</div>
+                <div class="org-name-en" id="textOrgEn">Epilepsy Foundation of Hong Kong</div>
+            </div>
         </div>
         
+        <div class="lang-selector">
+            <button id="btnLangZhHK" class="lang-btn active" onclick="setLanguage('zh-HK')">繁體</button>
+            <button id="btnLangZhCN" class="lang-btn" onclick="setLanguage('zh-CN')">简体</button>
+            <button id="btnLangEn" class="lang-btn" onclick="setLanguage('en')">EN</button>
+        </div>
+    </div>
+
+    <!-- Header Slogan & Titles -->
+    <div class="header">
         <div id="textSloganChars" class="slogan-chars">守、望、相、助</div>
         <h2 class="theme-title">Be Aware n' Be Around</h2>
         
