@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Epilepsy Foundation HK - Be Aware n' Be Around</title>
 
+    <!-- Links the PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- iOS Home Screen Icon -->
+    <link rel="apple-touch-icon" href="icon-192.png">
+
     <style>
         :root {
             --red: #d32f2f;
@@ -942,7 +948,8 @@
             statusDiv.innerText = msg;
         }
     </script>
-<script>
+
+    <script>
         // Register the Service Worker for Offline PWA Support
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
