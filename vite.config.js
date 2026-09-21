@@ -1,13 +1,19 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { lingui } from '@lingui/vite-plugin';
+import babel from '@rolldown/plugin-babel';
 import { VitePWA } from 'vite-plugin-pwa';
+import { fileURLToPath, URL } from 'node:url';
 
 export default defineConfig({
   base: './',
+  resolve: {
+    alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
+  },
   plugins: [
     lingui(),
     react(),
+    babel({ plugins: ['@lingui/babel-plugin-lingui-macro'] }),
     VitePWA({
       registerType: 'autoUpdate',
       manifest: {

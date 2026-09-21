@@ -6,5 +6,5 @@ export default {
   locales: ['en', 'zh-HK', 'zh-CN'],
   catalogs: [{ include: ['src'], path: '<rootDir>/src/i18n/locales/{locale}' }],
   format: formatter(),
-  runtimeConfigModule: ['./src/i18n/setup', 'i18n'],
+  runtimeConfigModule: ['@/i18n/setup', 'i18n'],
 };
