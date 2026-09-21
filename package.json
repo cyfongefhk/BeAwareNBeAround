@@ -13,11 +13,12 @@
     "e2e": "playwright test tests/e2e",
     "test:visual": "playwright test tests/visual",
     "i18n:extract": "lingui extract",
-    "i18n:compile": "lingui compile --output-prefix \"\"",
-    "i18n:check": "lingui extract --overwrite && lingui compile --output-prefix \"\""
+    "i18n:compile": "lingui compile",
+    "i18n:check": "lingui extract --overwrite && lingui compile"
   },
   "dependencies": {
     "@lingui/core": "^6.7.0",
+    "@lingui/macro": "^5.9.5",
     "@lingui/react": "^6.7.0",
     "@vitejs/plugin-react": "latest",
     "react": "latest",
