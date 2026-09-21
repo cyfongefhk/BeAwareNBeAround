@@ -1,6 +1,10 @@
+# Ignore build / testing related folder
 .worktrees/
 node_modules/
 dist/
 coverage/
 playwright-report/
 test-results/
+
+# Ignore OS-specific files
+.DS_Store
