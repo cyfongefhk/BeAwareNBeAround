@@ -389,6 +389,8 @@ git commit -m "test: validate Lingui catalogs"
 
 ## Task 5: Browser, PWA, And Visual Regression Verification
 
+**Status:** Complete (2026-09-21).
+
 **Files:**
 - Modify: `tests/e2e/app.spec.js`
 - Modify: `tests/visual/react-parity.spec.js`
@@ -429,6 +431,15 @@ Inspect `git diff`, `git status`, and `git blame` as required by `docs/SPEC.md`.
 git add tests docs/plans/2026-09-21-react-migration.md
 git commit -m "test: verify localized static PWA"
 ```
+
+**Verification record (2026-09-21):**
+
+- `make build`: PASS; production static PWA built successfully.
+- `npm run e2e`: PASS; 6 Playwright tests passed.
+- `npm run test:visual`: PASS; 3 fixed-viewport localized visual snapshot tests passed with the YouTube iframe masked.
+- `make e2e-test-full`: PASS; reran the 6 E2E and 3 visual tests successfully.
+
+Task 6 and final Lingui migration review remain outstanding.
 
 ## Acceptance Criteria
 
