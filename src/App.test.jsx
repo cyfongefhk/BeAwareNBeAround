@@ -32,6 +32,7 @@ test('switches the visible action labels to English', () => {
 
   expect(screen.getByRole('button', { name: 'STAY' })).toBeInTheDocument();
   expect(screen.getByText('Global Clicks:')).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: '🔗 Learn more about Epilepsy Foundation HK' })).toBeInTheDocument();
 });
 
 test('renders the Traditional Chinese education status with its action identifier', () => {

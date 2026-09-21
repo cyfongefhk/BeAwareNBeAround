@@ -39,6 +39,11 @@ msgid "setup.summary"
 msgstr "📲 安装及使用指南 ▼"
 
 #. js-lingui-explicit-id
+#: src/App.jsx:213
+msgid "footer.linkLabel"
+msgstr "🔗 了解更多 Epilepsy Foundation HK"
+
+#. js-lingui-explicit-id
 #: src/App.jsx:172
 msgid "video.title"
 msgstr "急性癫痫发作处理动画"

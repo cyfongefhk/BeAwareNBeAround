@@ -210,7 +210,7 @@ export default function App() {
         <p>{language === 'en' ? 'The counter is currently a local demonstration counter stored on this device.' : '計數器目前在本機裝置暫存，用作示範用途。'}</p>
       </ContentPanel>
 
-      <footer className="footer-linktree"><a href="https://linktr.ee/EpilepsyFoundationOfHongKong" target="_blank" rel="noopener noreferrer" className="linktree-btn">🔗 了解更多 Epilepsy Foundation HK</a></footer>
+      <footer className="footer-linktree"><a href="https://linktr.ee/EpilepsyFoundationOfHongKong" target="_blank" rel="noopener noreferrer" className="linktree-btn">{t({ id: 'footer.linkLabel', message: '🔗 Learn more about Epilepsy Foundation HK' })}</a></footer>
     </main>
   );
 }
