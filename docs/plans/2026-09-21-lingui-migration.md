@@ -93,9 +93,13 @@ Expected: FAIL because the i18n modules do not exist.
 Install compatible current versions of:
 
 ```bash
-npm install @lingui/core @lingui/react @lingui/macro
+npm install @lingui/core @lingui/react
 npm install --save-dev @lingui/cli @lingui/vite-plugin
 ```
+
+Import macros from the version-matched `@lingui/core/macro` and
+`@lingui/react/macro` subpaths rather than installing the separate
+`@lingui/macro` package.
 
 Add scripts:
 
