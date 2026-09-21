@@ -38,7 +38,9 @@ test('switches the visible action labels to English', () => {
 test('renders the Traditional Chinese education status with its action identifier', () => {
   const speak = vi.spyOn(window.speechSynthesis, 'speak').mockImplementation(() => {});
   vi.spyOn(window.speechSynthesis, 'cancel').mockImplementation(() => {});
-  renderApp();
+  renderApp('en');
+
+  fireEvent.click(screen.getByRole('button', { name: '繁體' }));
 
   fireEvent.click(screen.getByRole('button', { name: '守' }));
 
@@ -50,7 +52,9 @@ test('renders the Traditional Chinese education status with its action identifie
 test('renders the English education status with its action identifier', () => {
   vi.spyOn(window.speechSynthesis, 'speak').mockImplementation(() => {});
   vi.spyOn(window.speechSynthesis, 'cancel').mockImplementation(() => {});
-  renderApp('en');
+  renderApp();
+
+  fireEvent.click(screen.getByRole('button', { name: 'EN' }));
 
   fireEvent.click(screen.getByRole('button', { name: 'STAY' }));
 
