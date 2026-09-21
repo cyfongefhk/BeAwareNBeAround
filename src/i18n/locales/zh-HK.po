@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2026-09-21 09:54+0000\n"
+"POT-Creation-Date: 2026-09-21 10:23+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -12,3 +12,228 @@ msgstr ""
 "Last-Translator: \n"
 "Language-Team: \n"
 "Plural-Forms: \n"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:171
+msgid "video.label"
+msgstr "▶️ 急性腦癇發作處理動畫"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:50
+msgid "faq.summary"
+msgstr "❓ 常見問題 (FAQ) ▼"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:49
+msgid "whatIs.summary"
+msgstr "💡 什麼是 Be Aware n' Be Around? ▼"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:48
+msgid "install.button"
+msgstr "📥 安裝 App"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:47
+msgid "setup.summary"
+msgstr "📲 安裝及使用指南 ▼"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:172
+msgid "video.title"
+msgstr "急性腦癇發作處理動畫"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:32
+msgid "header.subtitle"
+msgstr "處理急性腦癇發作的口訣"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:35
+msgid "mode.label"
+msgstr "應用模式："
+
+#. js-lingui-explicit-id
+#: src/App.jsx:145
+msgid "app.title"
+msgstr "Be Aware n' Be Around"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:36
+msgid "mode.education"
+msgstr "教育模式"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:24
+msgid "status.educationDefault"
+msgstr "教育模式：請點擊按鍵聆聽指示。"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:129
+msgid "organization.logoAlt"
+msgstr "香港腦癇基金會"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:133
+msgid "organization.name"
+msgstr "Epilepsy Foundation of Hong Kong"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:164
+msgid "actions.ariaLabel"
+msgstr "急救行動"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:179
+msgid "guide.step3"
+msgstr "將患者輕輕翻側，保持呼吸道暢通。切勿強行將任何物品塞入患者口中。"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:34
+msgid "counter.label"
+msgstr "全球點擊次數 (Global Clicks):"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:44
+msgid "action.help"
+msgstr "助"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:93
+msgid "education.step4"
+msgstr "助。尋求協助。陪伴患者直至清醒，若超過五分鐘請召喚救護車。"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:136
+msgid "language.selectorLabel"
+msgstr "語言"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:110
+msgid "status.microphoneRequired"
+msgstr "需要麥克風權限才能進行錄音。"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:84
+msgid "status.noRecording"
+msgstr "此按鍵尚未有錄音。"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:178
+msgid "guide.step2"
+msgstr "觀察並保護患者。移開附近危險物品，用軟物墊著患者頭部。"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:103
+msgid "status.playbackMode"
+msgstr "播放模式：開啟。"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:84
+msgid "status.playingRecording"
+msgstr "播放按鍵 {id}..."
+
+#. js-lingui-explicit-id
+#: src/App.jsx:96
+msgid "status.playingEducation"
+msgstr "播放教育步驟 {id}..."
+
+#. js-lingui-explicit-id
+#: src/App.jsx:82
+msgid "status.recordingBusy"
+msgstr "請先停止目前的錄音！"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:108
+msgid "status.readyToRecord"
+msgstr "準備錄音。"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:38
+msgid "record.off"
+msgstr "錄音模式：關閉"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:39
+msgid "record.on"
+msgstr "錄音模式：開啟 (請點擊按鍵)"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:82
+msgid "status.recording"
+msgstr "正在按鍵 {id} 錄音... (最長60秒)"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:42
+msgid "action.safe"
+msgstr "望"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:91
+msgid "education.step2"
+msgstr "望。觀察並保護患者。移開附近危險物品，用軟物墊著患者頭部。"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:180
+msgid "guide.step4"
+msgstr "尋求協助。陪伴患者直至清醒，若超過五分鐘請召喚救護車。"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:46
+msgid "guide.title"
+msgstr "守望相助 急救指南"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:43
+msgid "action.side"
+msgstr "相"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:92
+msgid "education.step3"
+msgstr "相。將患者輕輕翻側，保持呼吸道暢通。切勿強行將任何物品塞入患者口中。"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:41
+msgid "action.stay"
+msgstr "守"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:177
+msgid "guide.step1"
+msgstr "保持鎮定，記錄抽搐開始及持續的時間。"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:31
+msgid "header.slogan"
+msgstr "守、望、相、助"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:90
+msgid "education.step1"
+msgstr "守。保持鎮定，記錄抽搐開始及持續的時間。"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:121
+msgid "install.fallbackAlert"
+msgstr "請使用瀏覽器的「加入主畫面」選項安裝。"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:37
+msgid "mode.toy"
+msgstr "玩具模式 (錄音/播放)"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:25
+msgid "status.toyDefault"
+msgstr "玩具模式：準備就緒。"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:33
+msgid "header.secondarySubtitle"
+msgstr "Acute Seizure Management Slogan"
+
+#. js-lingui-explicit-id
+#: src/App.jsx:132
+msgid "organization.nameChinese"
+msgstr "香港腦癇基金會"
