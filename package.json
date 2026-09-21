@@ -11,9 +11,14 @@
     "test:watch": "vitest",
     "lint": "eslint .",
     "e2e": "playwright test tests/e2e",
-    "test:visual": "playwright test tests/visual"
+    "test:visual": "playwright test tests/visual",
+    "i18n:extract": "lingui extract",
+    "i18n:compile": "lingui compile --output-prefix \"\"",
+    "i18n:check": "lingui extract --overwrite && lingui compile --output-prefix \"\""
   },
   "dependencies": {
+    "@lingui/core": "^6.7.0",
+    "@lingui/react": "^6.7.0",
     "@vitejs/plugin-react": "latest",
     "react": "latest",
     "react-dom": "latest",
@@ -22,7 +27,11 @@
   },
   "devDependencies": {
     "@eslint/js": "latest",
+    "@lingui/cli": "^6.7.0",
+    "@lingui/format-po": "^6.7.0",
+    "@lingui/vite-plugin": "^6.7.0",
     "@playwright/test": "latest",
+    "@rolldown/plugin-babel": "^0.1.7",
     "@testing-library/jest-dom": "latest",
     "@testing-library/react": "latest",
     "eslint": "latest",

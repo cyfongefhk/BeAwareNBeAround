@@ -1,10 +1,12 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { lingui } from '@lingui/vite-plugin';
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
   base: './',
   plugins: [
+    lingui(),
     react(),
     VitePWA({
       registerType: 'autoUpdate',
