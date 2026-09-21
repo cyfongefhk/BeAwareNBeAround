@@ -196,14 +196,20 @@ make e2e-test-full
 
 ## Localization Task 5 Verification Record
 
-Completed 2026-09-21 as part of the Lingui migration browser, PWA, and visual regression verification:
+Automated browser, PWA, and visual verification completed 2026-09-21 as part of the Lingui migration:
 
 - `make build`: PASS; production static PWA built successfully.
 - `npm run e2e`: PASS; 6 Playwright tests passed.
 - `npm run test:visual`: PASS; 3 fixed-viewport localized visual snapshot tests passed with the YouTube iframe masked.
 - `make e2e-test-full`: PASS; reran the 6 E2E and 3 visual tests successfully.
 
-This record does not mark the Lingui migration or React migration final review complete.
+**Outstanding manual acceptance checks:**
+
+- Change language in desktop and narrow mobile viewports; confirm the selected language is applied.
+- Confirm text-to-speech uses `zh-HK`, `zh-CN`, and `en-US` browser speech locales.
+- Install the built PWA and confirm all catalogs load offline after the first successful installation.
+
+Lingui Task 5 remains pending these manual checks. This record does not mark the Lingui migration or React migration final review complete.
 
 ## Acceptance Criteria
 
