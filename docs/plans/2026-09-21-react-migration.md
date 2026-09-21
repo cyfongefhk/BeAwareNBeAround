@@ -194,6 +194,17 @@ make e2e-test-full
 
 **Human Testing:** Verify keyboard navigation, visible focus, mobile and desktop layouts, unavailable/denied browser capabilities, installed PWA launch, and visual parity at all approved viewports.
 
+## Localization Task 5 Verification Record
+
+Completed 2026-09-21 as part of the Lingui migration browser, PWA, and visual regression verification:
+
+- `make build`: PASS; production static PWA built successfully.
+- `npm run e2e`: PASS; 6 Playwright tests passed.
+- `npm run test:visual`: PASS; 3 fixed-viewport localized visual snapshot tests passed with the YouTube iframe masked.
+- `make e2e-test-full`: PASS; reran the 6 E2E and 3 visual tests successfully.
+
+This record does not mark the Lingui migration or React migration final review complete.
+
 ## Acceptance Criteria
 
 - `dist/` is static and deployable without a server runtime.
