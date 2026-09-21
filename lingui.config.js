@@ -2,6 +2,7 @@ import { formatter } from '@lingui/format-po';
 
 export default {
   sourceLocale: 'en',
+  pseudoLocale: undefined,
   locales: ['en', 'zh-HK', 'zh-CN'],
   catalogs: [{ include: ['src'], path: '<rootDir>/src/i18n/locales/{locale}' }],
   format: formatter(),
