@@ -182,32 +182,32 @@ export default function App() {
 
       <div className="install-row">
         <ContentPanel className="setup-guide" summary={labels.setup}>
-          <h3>{language === 'en' ? 'How to Install' : '如何安裝至手機'}</h3>
-          <ul><li><strong>iPhone (iOS):</strong> {language === 'en' ? "Open in Safari, tap Share, then select Add to Home Screen." : '使用 Safari 瀏覽器開啟此網頁，點擊「分享」圖示，然後選擇「加入主畫面」。'}</li><li><strong>Android:</strong> {language === 'en' ? 'Open in Chrome, use the menu, then select Add to Home screen.' : '使用 Chrome 瀏覽器開啟，點擊右上角選單，然後選擇「加到主畫面」。'}</li></ul>
-          <h3>{language === 'en' ? 'How to Operate' : '如何操作'}</h3>
-          <ul><li><strong>{labels.education}:</strong> {language === 'en' ? 'Tap a button to hear the clinical instruction for that step.' : '點擊顏色按鍵，手機會播放該步驟的急救指示。'}</li><li><strong>{labels.toy}:</strong> {language === 'en' ? 'Turn Record Mode on, tap a button to record for up to 60 seconds, then turn it off to play recordings.' : '開啟錄音模式後，點擊任何顏色按鍵錄製聲音（最長60秒），關閉後點擊按鍵即可播放。'}</li></ul>
+          <h3>{t({ id: 'setup.installHeading', message: 'How to Install' })}</h3>
+          <ul><li><strong>{t({ id: 'setup.iosLabel', message: 'iPhone (iOS):' })}</strong> {t({ id: 'setup.iosInstructions', message: 'Open in Safari, tap Share, then select Add to Home Screen.' })}</li><li><strong>{t({ id: 'setup.androidLabel', message: 'Android:' })}</strong> {t({ id: 'setup.androidInstructions', message: 'Open in Chrome, use the menu, then select Add to Home screen.' })}</li></ul>
+          <h3>{t({ id: 'setup.operateHeading', message: 'How to Operate' })}</h3>
+          <ul><li><strong>{labels.education}:</strong> {t({ id: 'setup.educationInstructions', message: 'Tap a button to hear the clinical instruction for that step.' })}</li><li><strong>{labels.toy}:</strong> {t({ id: 'setup.toyInstructions', message: 'Turn Record Mode on, tap a button to record for up to 60 seconds, then turn it off to play recordings.' })}</li></ul>
         </ContentPanel>
         <button className="install-btn-small" onClick={installApp}>{labels.install}</button>
       </div>
 
       <ContentPanel className="what-is-guide" summary={labels.whatIs}>
-        <p>"Be Aware of the time. Be Around for the safe recovery."</p>
-        <p>"Be Aware: Don't restrain. Be Around: Protect and remain."</p>
-        <p>"Aware of what to do, Around when it matters most."</p>
-        <h3>Be Aware (Mental Vigilance &amp; Safety Knowledge)</h3>
-        <ul><li><strong>Recognize &amp; Time:</strong> Note when the seizure starts; call emergency services if it exceeds 5 minutes.</li><li><strong>Know the Don'ts:</strong> Never restrain movement or place anything in the person's mouth.</li><li><strong>Assess Environment:</strong> Spot physical hazards such as sharp corners, water, or stairs.</li></ul>
-        <h3>Be Around (Physical Protection &amp; Care)</h3>
-        <ul><li><strong>Secure the Surroundings:</strong> Clear hard objects and cushion their head.</li><li><strong>Position safely:</strong> Turn the person gently onto their side to keep their airway clear.</li><li><strong>Provide Support:</strong> Stay until the person is fully alert and offer calm reassurance.</li></ul>
+        <p>{t({ id: 'whatIs.tagline1', message: 'Be Aware of the time. Be Around for the safe recovery.' })}</p>
+        <p>{t({ id: 'whatIs.tagline2', message: "Be Aware: Don't restrain. Be Around: Protect and remain." })}</p>
+        <p>{t({ id: 'whatIs.tagline3', message: 'Aware of what to do, Around when it matters most.' })}</p>
+        <h3>{t({ id: 'whatIs.awareHeading', message: 'Be Aware (Mental Vigilance & Safety Knowledge)' })}</h3>
+        <ul><li><strong>{t({ id: 'whatIs.recognizeLabel', message: 'Recognize & Time:' })}</strong> {t({ id: 'whatIs.recognizeText', message: 'Note when the seizure starts; call emergency services if it exceeds 5 minutes.' })}</li><li><strong>{t({ id: 'whatIs.dontsLabel', message: "Know the Don'ts:" })}</strong> {t({ id: 'whatIs.dontsText', message: "Never restrain movement or place anything in the person's mouth." })}</li><li><strong>{t({ id: 'whatIs.environmentLabel', message: 'Assess Environment:' })}</strong> {t({ id: 'whatIs.environmentText', message: 'Spot physical hazards such as sharp corners, water, or stairs.' })}</li></ul>
+        <h3>{t({ id: 'whatIs.aroundHeading', message: 'Be Around (Physical Protection & Care)' })}</h3>
+        <ul><li><strong>{t({ id: 'whatIs.secureLabel', message: 'Secure the Surroundings:' })}</strong> {t({ id: 'whatIs.secureText', message: 'Clear hard objects and cushion their head.' })}</li><li><strong>{t({ id: 'whatIs.positionLabel', message: 'Position safely:' })}</strong> {t({ id: 'whatIs.positionText', message: 'Turn the person gently onto their side to keep their airway clear.' })}</li><li><strong>{t({ id: 'whatIs.supportLabel', message: 'Provide Support:' })}</strong> {t({ id: 'whatIs.supportText', message: 'Stay until the person is fully alert and offer calm reassurance.' })}</li></ul>
       </ContentPanel>
       <ContentPanel className="faq-guide" summary={labels.faq}>
-        <h3>Q1: {language === 'en' ? 'Why is text-to-speech not working?' : '為什麼教育模式沒有聲音？'}</h3>
-        <p>{language === 'en' ? "This app uses your phone's built-in text-to-speech engine. Download the required voice package, disable silent mode, and raise media volume." : '本應用程式使用手機內置的語音引擎。請下載對應語言包，關閉靜音模式並調高媒體音量。'}</p>
-        <h3>Q2: {language === 'en' ? 'What if voice recording fails?' : '玩具模式錄音失敗怎麼辦？'}</h3>
-        <p>{language === 'en' ? 'Recording needs microphone permission. Allow browser microphone access and ensure the device is not muted.' : '錄音功能需要麥克風權限。請允許瀏覽器存取麥克風，並確保手機未處於靜音模式。'}</p>
-        <h3>Q3: {language === 'en' ? 'Can I use the app offline?' : '如何確保離線時也能使用？'}</h3>
-        <p>{language === 'en' ? 'Install this PWA or add it to your home screen after a successful first load.' : '將此 PWA 安裝或加入主畫面，在首次成功載入後即可離線使用核心內容。'}</p>
-        <h3>Q4: {language === 'en' ? 'How does the global click counter work?' : '為什麼點擊次數沒有立即更新？'}</h3>
-        <p>{language === 'en' ? 'The counter is currently a local demonstration counter stored on this device.' : '計數器目前在本機裝置暫存，用作示範用途。'}</p>
+        <h3>{t({ id: 'faq.question1', message: 'Q1: Why is text-to-speech not working?' })}</h3>
+        <p>{t({ id: 'faq.answer1', message: "This app uses your phone's built-in text-to-speech engine. Download the required voice package, disable silent mode, and raise media volume." })}</p>
+        <h3>{t({ id: 'faq.question2', message: 'Q2: What if voice recording fails?' })}</h3>
+        <p>{t({ id: 'faq.answer2', message: 'Recording needs microphone permission. Allow browser microphone access and ensure the device is not muted.' })}</p>
+        <h3>{t({ id: 'faq.question3', message: 'Q3: Can I use the app offline?' })}</h3>
+        <p>{t({ id: 'faq.answer3', message: 'Install this PWA or add it to your home screen after a successful first load.' })}</p>
+        <h3>{t({ id: 'faq.question4', message: 'Q4: How does the global click counter work?' })}</h3>
+        <p>{t({ id: 'faq.answer4', message: 'The counter is currently a local demonstration counter stored on this device.' })}</p>
       </ContentPanel>
 
       <footer className="footer-linktree"><a href="https://linktr.ee/EpilepsyFoundationOfHongKong" target="_blank" rel="noopener noreferrer" className="linktree-btn">{t({ id: 'footer.linkLabel', message: '🔗 Learn more about Epilepsy Foundation HK' })}</a></footer>
