@@ -4,7 +4,7 @@ export default defineConfig({
   testDir: './tests',
   fullyParallel: false,
   use: {
-    baseURL: 'http://127.0.0.1:4174',
+    baseURL: process.env.PLAYWRIGHT_BASE_URL ?? 'http://127.0.0.1:4174',
     viewport: { width: 375, height: 1200 },
     colorScheme: 'light',
   },

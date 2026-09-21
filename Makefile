@@ -10,4 +10,4 @@ build:
 	npm run build
 
 e2e-test-full:
-	npm run e2e
+	npm run e2e && npm run test:visual
