@@ -5,9 +5,9 @@ i18n-check:
 	if command -v cmp >/dev/null 2>&1; then \
 		compare_catalogs() { cmp -s "$$1" "$$2"; }; \
 	elif command -v sha256sum >/dev/null 2>&1; then \
-		compare_catalogs() { [ "$$(sha256sum "$$1" | cut -d ' ' -f 1)" = "$$(sha256sum "$$2" | cut -d ' ' -f 1)" ]; }; \
+		compare_catalogs() { left_hash=$$(sha256sum "$$1") || return 1; right_hash=$$(sha256sum "$$2") || return 1; left_hash=$${left_hash%% *}; right_hash=$${right_hash%% *}; [ -n "$$left_hash" ] && [ "$$left_hash" = "$$right_hash" ]; }; \
 	elif command -v shasum >/dev/null 2>&1; then \
-		compare_catalogs() { [ "$$(shasum -a 256 "$$1" | cut -d ' ' -f 1)" = "$$(shasum -a 256 "$$2" | cut -d ' ' -f 1)" ]; }; \
+		compare_catalogs() { left_hash=$$(shasum -a 256 "$$1") || return 1; right_hash=$$(shasum -a 256 "$$2") || return 1; left_hash=$${left_hash%% *}; right_hash=$${right_hash%% *}; [ -n "$$left_hash" ] && [ "$$left_hash" = "$$right_hash" ]; }; \
 	else \
 		printf '%s\n' "i18n-check requires cmp, sha256sum, or shasum for catalog drift detection." >&2; \
 		exit 1; \
