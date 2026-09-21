@@ -389,7 +389,7 @@ git commit -m "test: validate Lingui catalogs"
 
 ## Task 5: Browser, PWA, And Visual Regression Verification
 
-**Status:** Complete (2026-09-21).
+**Status:** Pending manual acceptance; automated browser, PWA, and visual verification completed 2026-09-21.
 
 **Files:**
 - Modify: `tests/e2e/app.spec.js`
@@ -439,7 +439,13 @@ git commit -m "test: verify localized static PWA"
 - `npm run test:visual`: PASS; 3 fixed-viewport localized visual snapshot tests passed with the YouTube iframe masked.
 - `make e2e-test-full`: PASS; reran the 6 E2E and 3 visual tests successfully.
 
-Task 6 and final Lingui migration review remain outstanding.
+**Outstanding manual acceptance checks:**
+
+- Change language in desktop and narrow mobile viewports; confirm the selected language is applied.
+- Confirm text-to-speech uses `zh-HK`, `zh-CN`, and `en-US` browser speech locales.
+- Install the built PWA and confirm all catalogs load offline after the first successful installation.
+
+Task 5 remains pending these manual checks. Task 6 and final Lingui migration review also remain outstanding.
 
 ## Acceptance Criteria
 
