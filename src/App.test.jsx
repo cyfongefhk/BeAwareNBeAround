@@ -43,6 +43,7 @@ test('switches expanded setup, guidance, FAQ, and footer content between languag
   fireEvent.click(screen.getByText('❓ 常見問題 (FAQ) ▼'));
 
   expect(screen.getByRole('heading', { name: '如何安裝至手機' })).toBeInTheDocument();
+  expect(screen.getByText('保持鎮定，記錄抽搐開始及持續的時間。')).toBeInTheDocument();
   expect(screen.getByText('留意發作時間，陪伴患者安全復原。')).toBeInTheDocument();
   expect(screen.getByRole('heading', { name: 'Q1: 為什麼教育模式沒有聲音？' })).toBeInTheDocument();
   expect(screen.getByRole('link', { name: '🔗 了解更多 Epilepsy Foundation HK' })).toBeInTheDocument();
@@ -50,6 +51,7 @@ test('switches expanded setup, guidance, FAQ, and footer content between languag
   fireEvent.click(screen.getByRole('button', { name: 'EN' }));
 
   expect(screen.getByRole('heading', { name: 'How to Install' })).toBeInTheDocument();
+  expect(screen.getByText('Stay calm and time the seizure.')).toBeInTheDocument();
   expect(screen.getByText('Be Aware of the time. Be Around for the safe recovery.')).toBeInTheDocument();
   expect(screen.getByRole('heading', { name: 'Q1: Why is text-to-speech not working?' })).toBeInTheDocument();
   expect(screen.getByRole('link', { name: '🔗 Learn more about Epilepsy Foundation HK' })).toBeInTheDocument();
