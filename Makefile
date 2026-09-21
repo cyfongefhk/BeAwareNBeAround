@@ -8,7 +8,7 @@ i18n-check:
 	trap restore_catalogs EXIT; \
 	npm run i18n:check; \
 	for catalog in src/i18n/locales/*.po; do \
-		if [ "$$(sha256sum "$$catalog" | cut -d ' ' -f 1)" != "$$(sha256sum "$$backup_dir/$$(basename "$$catalog")" | cut -d ' ' -f 1)" ]; then \
+		if ! cmp -s "$$catalog" "$$backup_dir/$$(basename "$$catalog")"; then \
 			printf '%s\n' "i18n catalogs are out of date. Run npm run i18n:extract, translate changed entries, then npm run i18n:compile." >&2; \
 			exit 1; \
 		fi; \
